@@ -6,8 +6,6 @@ import { LinkListWrapper } from './styled';
 export default function LinkList() {
     const { docs } = useFirestore('links');
 
-    console.log(docs);
-
     return (
         <LinkListWrapper>
             {docs.map((link) => (
