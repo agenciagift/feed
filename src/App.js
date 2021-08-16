@@ -1,4 +1,5 @@
 import React from 'react';
+import AddLink from './components/AddLink';
 import Header from './components/Header';
 import { Wrapper } from './components/layout';
 import LinkList from './components/LinkList';
@@ -8,6 +9,7 @@ function App() {
     <>
       <Header />
       <Wrapper>
+        <AddLink />
         <LinkList />
       </Wrapper>
     </>

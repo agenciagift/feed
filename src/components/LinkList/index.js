@@ -1,15 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import useFirestore from '../../hooks/useFirestore';
 import LinkItem from '../LinkItem';
-import { selectLinks } from './linksSlice';
 import { LinkListWrapper } from './styled';
 
 export default function LinkList() {
-    const links = useSelector(selectLinks);
+    const { docs } = useFirestore('links');
+
+    console.log(docs);
 
     return (
         <LinkListWrapper>
-            {links.map((link) => (
+            {docs.map((link) => (
                 <LinkItem key={link.id} link={link} />
             ))}
         </LinkListWrapper>

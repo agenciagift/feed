@@ -1,5 +1,4 @@
-
-export const sliceState = {
+export const status = {
     IDLE: 'IDLE',
     LOADING: 'LOADING',
 };

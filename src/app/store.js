@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import linksReducer from '../components/LinkList/linksSlice';
+import searchReducer from './slices/search';
 
 export const store = configureStore({
   reducer: {
-    links: linksReducer,
+    search: searchReducer,
   },
 });

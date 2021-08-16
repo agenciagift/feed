@@ -1,23 +1,21 @@
-import React, { useState } from 'react'
-import { addLink } from '../../firebase/useLinks';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { set } from '../../app/slices/search';
 import { BaseButton, BaseInput } from '../form';
 
 export default function Search() {
-    const [text, setText] = useState('');
+    const [term, setTerm] = useState('');
+    const dispatch = useDispatch();
 
     const submitForm = (e) => {
         e.preventDefault();
 
-        addLink({
-            url: text,
-        }).then(() => {
-            setText('');
-        });
+        dispatch(set({ term }));
     };
 
     return (
         <form onSubmit={submitForm}>
-            <BaseInput type="text" value={text} onChange={(e) => setText(e.target.value)} />
+            <BaseInput type="text" value={term} onChange={(e) => setTerm(e.target.value)} />
             <BaseButton>Pesquisar</BaseButton>
         </form>
     )
