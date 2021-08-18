@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { projectFirestore, timestamp } from '../../firebase/config';
+import useAuth from '../../hooks/useAuth';
 import { BaseButton, BaseInput, BaseTextArea } from '../form';
-import { HorizontalLayout, VerticalLayout } from '../layout';
+import { VerticalLayout } from '../layout';
 
 function AddLink() {
     const [error, setError] = useState('');
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
-    
+    const { user } = useAuth();
+
     const fail = (message) => {
         setError(message);
         setTimeout(setError, 3000);
@@ -15,34 +17,37 @@ function AddLink() {
 
     const createNewPost = () => {
         const createdAt = timestamp();
-        return { url, description, createdAt };
+        const author = user.uid;
+        return { url, description, author, createdAt };
     };
 
     const addLink = async (e) => {
         e.preventDefault();
+        setError('');
 
         if (!url) {
             fail('Informe o link para compartilhar.');
             return;
         }
 
-        await projectFirestore.collection('links').add(createNewPost());
-        setUrl('');
-        setDescription('');
+        try {
+            await projectFirestore.collection('links').add(createNewPost());
+            setUrl('');
+            setDescription('');
+        } catch (err) {
+            setError('Ocorreu um erro inesperado :( Desculpe.');
+        }
     };
 
     return (
         <form onSubmit={addLink}>
-            <HorizontalLayout>
-                <p>Compartilhar link</p>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-            </HorizontalLayout>
+            <h4>Compartilhar link</h4>
 
             <VerticalLayout>
                 <BaseInput placeholder="https://" value={url} onChange={(e) => setUrl(e.target.value)} />
                 <BaseTextArea placeholder="Description..." value={description} onChange={(e) => setDescription(e.target.value)} />
-                <p>{`{ url: "${url}", description: "${description}" }`}</p>
                 <BaseButton>Publicar</BaseButton>
+                {error && <p style={{ color: 'red' }}>{`${error}`}</p>}
             </VerticalLayout>
         </form>
     )

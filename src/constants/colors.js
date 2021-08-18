@@ -6,7 +6,7 @@ export const grey = {
     dark: '#666',
 };
 
-const createButtonPallete = (color, bg, hover, active) => css`
+export const createButtonPallete = (color, bg, hover, active) => css`
     color: ${color};
     background-color: ${bg};
 
@@ -19,6 +19,12 @@ const createButtonPallete = (color, bg, hover, active) => css`
     }
 `;
 
+export const uiColors = {
+    idle: '#0062b5',
+    hover: '#008aff',
+    active: '#0062b5',
+};
+
 export const buttonColorsCss = {
-    primary: createButtonPallete('#fff', '#0062b5', '#008aff', '#0062b5'),
+    primary: createButtonPallete('#fff', uiColors.idle, uiColors.hover, uiColors.active),
 };
