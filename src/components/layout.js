@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { getContentWidth, getSpacing } from "../constants/sizes";
 
 export const Wrapper = styled.div`
-    max-width: ${getContentWidth()};
     margin: auto;
+    padding-left: ${getSpacing()};
+    padding-right: ${getSpacing()};
+    max-width: ${getContentWidth()};
 `;
 
 export const VerticalLayout = styled.div`

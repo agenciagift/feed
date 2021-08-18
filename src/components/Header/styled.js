@@ -4,7 +4,8 @@ import { getSpacing } from "../../constants/sizes";
 import { Wrapper } from "../layout";
 
 export const HeaderContainer = styled.header`
-    padding: ${getSpacing('s')};
+    padding-top: ${getSpacing('s')};
+    padding-bottom: ${getSpacing('s')};
     background-color: ${grey.light};
 `;
 
