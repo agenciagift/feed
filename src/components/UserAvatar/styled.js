@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { createButtonPallete, uiColors } from "../../constants/colors";
 
+export const UserAvatarContainer = styled.div`
+    position: relative;
+`;
+
 export const UserAvatarButton = styled.button`
     ${createButtonPallete('currentColor', 'transparent')}
     padding: 0;

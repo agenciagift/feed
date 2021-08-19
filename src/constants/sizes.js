@@ -1,12 +1,12 @@
 export const spacing = {
-    xs: 4,
-    s: 8,
-    m: 16,
-    l: 32,
-    xl: 64,
+    XS: 4,
+    S: 8,
+    M: 16,
+    L: 32,
+    XL: 64,
 };
 
-export const getSpacing = (key = 'm') => `${spacing[key] || spacing.m}px`;
+export const getSpacing = (key = 'm') => `${spacing[key.toUpperCase()] || spacing.M}px`;
 
 export const contentWidth = {
     default: 800,
