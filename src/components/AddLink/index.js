@@ -39,6 +39,10 @@ function AddLink() {
         }
     };
 
+    if (!user) {
+        return null;
+    }
+
     return (
         <form onSubmit={addLink}>
             <h4>Compartilhar link</h4>
@@ -50,7 +54,7 @@ function AddLink() {
                 {error && <p style={{ color: 'red' }}>{`${error}`}</p>}
             </VerticalLayout>
         </form>
-    )
+    );
 }
 
-export default AddLink
+export default AddLink;
