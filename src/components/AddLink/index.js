@@ -1,24 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { projectFirestore, timestamp } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
+import useScrape from '../../hooks/useScrape';
 import { BaseButton, BaseInput, BaseTextArea } from '../form';
-import { VerticalLayout } from '../layout';
+import { HorizontalLayout, VerticalLayout } from '../layout';
+import { ImagePreview } from './styled';
 
 function AddLink() {
     const [error, setError] = useState('');
     const [url, setUrl] = useState('');
+    const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const { user } = useAuth();
+    const [image, setImage] = useState('');
 
-    const fail = (message) => {
-        setError(message);
-        setTimeout(setError, 3000);
+    const resetState = () => {
+        setError('');
+        setUrl('');
+        setTitle('');
+        setDescription('');
+        setImage('');
     };
+
+    const { user } = useAuth();
+    const scrape = useScrape(url);
+
+    const fail = (message, delay = 5000) => {
+        setError(message);
+        setTimeout(() => setError(''), delay);
+    };
+
+    useEffect(() => {
+        if (!scrape.data) {
+            setImage('');
+            return;
+        }
+        setTitle(scrape.data.title || '');
+        setDescription(scrape.data.description || '');
+        setImage(scrape.data.image || '');
+    }, [scrape.data]);
+
+    useEffect(() => {
+        if (scrape.error) {
+            fail('Ocorreu um erro ao pesquisar. Verifique se o link está correto e tente novamente', 10000);
+        }
+    }, [scrape.error]);
 
     const createNewPost = () => {
         const createdAt = timestamp();
         const author = user.uid;
-        return { url, description, author, createdAt };
+        return { url, title, description, image, author, createdAt };
     };
 
     const addLink = async (e) => {
@@ -32,8 +62,7 @@ function AddLink() {
 
         try {
             await projectFirestore.collection('links').add(createNewPost());
-            setUrl('');
-            setDescription('');
+            resetState();
         } catch (err) {
             setError('Ocorreu um erro inesperado :( Desculpe.');
         }
@@ -43,14 +72,36 @@ function AddLink() {
         return null;
     }
 
+    const PublishForm = () => (
+        <HorizontalLayout>
+            {image && <ImagePreview src={image} alt="Imagem encontrada." />}
+
+            <VerticalLayout expand>
+                <BaseInput
+                    placeholder="Title..."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)} />
+                <BaseTextArea
+                    expand
+                    placeholder="Description..."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)} />
+                <BaseButton>Publicar</BaseButton>
+            </VerticalLayout>
+        </HorizontalLayout>
+    );
+
     return (
         <form onSubmit={addLink}>
             <h4>Compartilhar link</h4>
 
             <VerticalLayout>
-                <BaseInput placeholder="https://" value={url} onChange={(e) => setUrl(e.target.value)} />
-                <BaseTextArea placeholder="Description..." value={description} onChange={(e) => setDescription(e.target.value)} />
-                <BaseButton>Publicar</BaseButton>
+                <BaseInput placeholder="https://" value={url} onChange={(e) => {
+                    setUrl(e.target.value);
+                    setError('');
+                }} />
+
+                {scrape.isUrlValid && !scrape.loading && !error && <PublishForm />}
                 {error && <p style={{ color: 'red' }}>{`${error}`}</p>}
             </VerticalLayout>
         </form>
