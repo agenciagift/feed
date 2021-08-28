@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { getContentWidth, getSpacing } from "../constants/sizes";
 
 export const Wrapper = styled.div`
@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
 export const VerticalLayout = styled.div`
     display: flex;
     flex-direction: column;
+
+    ${({ expand }) => expand && css`
+        flex: 1;
+    `}
 
     > * {
         margin-top: ${getSpacing('xs')};
