@@ -26,3 +26,13 @@ export const HorizontalLayout = styled.div`
     display: flex;
     justify-content: space-between;
 `;
+
+export const BasePreviewImage = styled.img`
+    align-self: stretch;
+    width: 200px;
+    object-fit: contain;
+    object-position: top;
+    margin-top: ${getSpacing('xs')};
+    margin-bottom: ${getSpacing('xs')};
+    margin-right: ${getSpacing('s')};
+`;

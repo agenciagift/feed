@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  word-wrap: break-word;
 }
 
 code {
@@ -14,4 +16,8 @@ code {
 
 textarea {
   resize: vertical;
+}
+
+a, input, textarea, select, button {
+  transition: 0.3s ease-in-out;
 }

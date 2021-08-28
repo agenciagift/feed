@@ -25,5 +25,11 @@ export const BaseTextArea = styled.textarea`
 
 export const BaseButton = styled.button`
     ${baseFormControlStyle}
-    ${buttonColorsCss.primary};
+    ${buttonColorsCss.primary}
+    cursor: pointer;
+`;
+
+export const NakedButton = styled(BaseButton)`
+    ${buttonColorsCss.naked}
+    border: 0 none;
 `;

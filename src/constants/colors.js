@@ -27,4 +27,5 @@ export const uiColors = {
 
 export const buttonColorsCss = {
     primary: createButtonPallete('#fff', uiColors.idle, uiColors.hover, uiColors.active),
+    naked: createButtonPallete('currentColor', 'transparent', grey.light),
 };

@@ -3,8 +3,7 @@ import { projectFirestore, timestamp } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
 import useScrape from '../../hooks/useScrape';
 import { BaseButton, BaseInput, BaseTextArea } from '../form';
-import { HorizontalLayout, VerticalLayout } from '../layout';
-import { ImagePreview } from './styled';
+import { BasePreviewImage, HorizontalLayout, VerticalLayout } from '../layout';
 
 function AddLink() {
     const [error, setError] = useState('');
@@ -74,7 +73,7 @@ function AddLink() {
 
     const PublishForm = () => (
         <HorizontalLayout>
-            {image && <ImagePreview src={image} alt="Imagem encontrada." />}
+            {image && <BasePreviewImage src={image} alt="Imagem encontrada." />}
 
             <VerticalLayout expand>
                 <BaseInput
