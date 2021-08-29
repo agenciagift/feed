@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { projectFirestore } from "../firebase/config";
+import { projectFirestore, timestamp } from "../firebase/config";
 
 const urlRegex = /^(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)?/;
 
@@ -18,13 +18,8 @@ const useScrape = (uri) => {
     const [isUrlValid, setIsUrlValid] = useState(true);
 
     useEffect(() => {
-        const match = !!uri.match(urlRegex);
-        setIsUrlValid(match);
-
-        if (!match || state.loading) {
-            setState({ ...state, data: null, error: null });
-            return;
-        }
+        const isUrlValid = !!uri.match(urlRegex);
+        setIsUrlValid(isUrlValid);
 
         const cache = SCRAPE_CACHE.get(uri);
         if (cache) {
@@ -32,14 +27,21 @@ const useScrape = (uri) => {
             return;
         }
 
+        if (!isUrlValid || SCRAPE_CACHE.has(uri)) {
+            return;
+        }
+
+        SCRAPE_CACHE.set(uri, null);
+
         const doc = projectFirestore.collection('scrape').doc(encodeURIComponent(uri));
 
         const tryFetchScraping = async () => {
             try {
+                const fetchedAt = timestamp();
                 const scrapeResponse = await fetchScraping(uri);
                 await doc.set(scrapeResponse);
                 SCRAPE_CACHE.set(uri, scrapeResponse);
-                setState({ ...scrapeResponse, loading: false });
+                setState({ ...scrapeResponse, fetchedAt, loading: false });
             } catch (error) {
                 SCRAPE_CACHE.set(uri, { error });
                 setState({ data: null, error, loading: false });
