@@ -3,7 +3,7 @@ import { authentication, projectFirestore, signInProviders } from "../firebase/c
 
 const useAuth = () => {
     const [user, setUser] = useState(null);
-    const [userConfig, setUserConfig] = useState(null);
+    const [userConfig, setUserConfig] = useState({});
     const signIn = (method = 'google') => authentication.signInWithPopup(signInProviders[method]);
     const signOut = () => authentication.signOut();
 
@@ -17,7 +17,7 @@ const useAuth = () => {
         projectFirestore.collection('userConfig')
             .doc(user.uid)
             .get()
-            .then(doc => setUserConfig(doc.data()));
+            .then(doc => setUserConfig(doc.data() || {}));
     }, [user]);
 
     return { user, userConfig, signIn, signOut }
