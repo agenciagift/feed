@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { projectFirestore, timestamp } from "../firebase/config";
 
-const urlRegex = /^(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)?/;
+const urlRegex = /^(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._+~#=]+\.[a-z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)?/;
 
 const SCRAPING_API_URL = 'https://gift-scraper.herokuapp.com/scrape/?format=json';
 
