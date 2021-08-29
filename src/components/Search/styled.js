@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
 import { createButtonPallete } from "../../constants/colors";
-import { getSpacing } from "../../constants/sizes";
+import { LARGE, SMALL } from "../../constants/sizes";
 import { BaseButton, BaseInput } from "../form";
 
 export const SearchForm = styled.form`
     display: flex;
     flex: 1;
-    margin-left: ${getSpacing('l')};
-    margin-right: ${getSpacing('l')};
-    padding-left: ${getSpacing('s')};
-    padding-right: ${getSpacing('s')};
+    margin-left: ${LARGE};
+    margin-right: ${LARGE};
+    padding-left: ${SMALL};
+    padding-right: ${SMALL};
     border-radius: 999px;
 
     transition: 0.3s ease-in-out;

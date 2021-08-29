@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { grey, uiColors } from "../../constants/colors";
-import { getSpacing } from "../../constants/sizes";
+import { EXTRA_SMALL, LARGE, SMALL } from "../../constants/sizes";
 import { NakedButton } from "../form";
 import { BasePreviewImage } from "../layout";
 
 export const LinkItemWrapper = styled.li`
-    margin-bottom: ${getSpacing('l')};
-    border-radius: ${getSpacing('xs')};
+    margin-bottom: ${LARGE};
+    border-radius: ${EXTRA_SMALL};
     box-shadow: 0 3px 0 ${grey.light};
 `;
 
@@ -23,12 +23,12 @@ export const LinkItemLink = styled.a`
 `;
 
 export const LinkPreviewImage = styled(BasePreviewImage)`
-    margin-right: ${getSpacing('l')}
+    margin-right: ${LARGE}
 `;
 
 export const LinkInteractionButton = styled(NakedButton)`
     border-radius: 999px;
-    margin-right: ${getSpacing('s')};
+    margin-right: ${SMALL};
     color: ${grey.mid};
     transition-property: background-color;
 

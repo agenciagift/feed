@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { getSpacing } from "../../constants/sizes";
 import { createButtonPallete, grey } from "../../constants/colors";
+import { getSpacing, SMALL } from "../../constants/sizes";
 
 export const UserMenuContainer = styled.div`
     position: absolute;
@@ -17,7 +17,7 @@ export const UserMenuContainer = styled.div`
         position: absolute;
         right: 16px;
         bottom: 100%;
-        border-width: 0 ${getSpacing('s')} ${getSpacing('s')};
+        border-width: 0 ${SMALL} ${SMALL};
         border-style: solid;
         border-color: transparent transparent #fff;
     }

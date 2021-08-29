@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { getContentWidth, getSpacing } from "../constants/sizes";
+import { EXTRA_SMALL, getContentWidth, getSpacing, SMALL } from "../constants/sizes";
 
 export const Wrapper = styled.div`
     margin: auto;
@@ -17,8 +17,8 @@ export const VerticalLayout = styled.div`
     `}
 
     > * {
-        margin-top: ${getSpacing('xs')};
-        margin-bottom: ${getSpacing('xs')};
+        margin-top: ${EXTRA_SMALL};
+        margin-bottom: ${EXTRA_SMALL};
     }
 `;
 
@@ -42,7 +42,7 @@ export const BasePreviewImage = styled.img`
     width: 200px;
     object-fit: contain;
     object-position: top;
-    margin-top: ${getSpacing('xs')};
-    margin-bottom: ${getSpacing('xs')};
-    margin-right: ${getSpacing('s')};
+    margin-top: ${EXTRA_SMALL};
+    margin-bottom: ${EXTRA_SMALL};
+    margin-right: ${SMALL};
 `;

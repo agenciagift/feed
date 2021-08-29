@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { grey } from "../../constants/colors";
-import { getSpacing } from "../../constants/sizes";
+import { SMALL } from "../../constants/sizes";
 import { Wrapper } from "../layout";
 
 export const HeaderContainer = styled.header`
-    padding-top: ${getSpacing('s')};
-    padding-bottom: ${getSpacing('s')};
+    padding-top: ${SMALL};
+    padding-bottom: ${SMALL};
     background-color: ${grey.light};
 `;
 
