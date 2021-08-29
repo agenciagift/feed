@@ -3,6 +3,8 @@ import { HorizontalLayout, VerticalLayout } from '../layout';
 import InteractionToolBar from './InteractionToolBar';
 import { LinkItemLink, LinkItemWrapper, LinkPreviewImage } from './styled';
 
+const ROW_BREAKPOINT = 600;
+
 const getDate = (link) => {
     if (!(link?.createdAt?.toDate && link.createdAt.toDate instanceof Function)) {
         return new Date(0);
@@ -15,7 +17,7 @@ export default function LinkItem({ link }) {
 
     return (
         <LinkItemWrapper key={link.id}>
-            <HorizontalLayout>
+            <HorizontalLayout breakUnder={ROW_BREAKPOINT}>
                 {link.image && <LinkPreviewImage src={link.image} alt={link.title} />}
 
                 <VerticalLayout expand>

@@ -25,6 +25,16 @@ export const VerticalLayout = styled.div`
 export const HorizontalLayout = styled.div`
     display: flex;
     justify-content: space-between;
+
+    ${({ wrap }) => wrap && css`
+        flex-wrap: wrap;
+    `}
+
+    ${({ breakUnder }) => breakUnder && css`
+        @media (max-width: ${breakUnder}px) {
+            flex-direction: column;
+        }
+    `}
 `;
 
 export const BasePreviewImage = styled.img`
