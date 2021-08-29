@@ -30,9 +30,14 @@ export const LinkInteractionButton = styled(NakedButton)`
     border-radius: 999px;
     margin-right: ${getSpacing('s')};
     color: ${grey.mid};
+    transition-property: background-color;
 
     &:hover, &:focus, &:active {
         color: ${({ activeColor }) => (activeColor && uiColors[activeColor]) || uiColors.hover};
+    }
+
+    &:active {
+        transform: scale(0.9);
     }
 
     svg {
