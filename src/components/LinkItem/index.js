@@ -3,7 +3,16 @@ import { HorizontalLayout, VerticalLayout } from '../layout';
 import InteractionToolBar from './InteractionToolBar';
 import { LinkItemLink, LinkItemWrapper, LinkPreviewImage } from './styled';
 
+const getDate = (link) => {
+    if (!(link?.createdAt?.toDate && link.createdAt.toDate instanceof Function)) {
+        return new Date(0);
+    }
+    return link.createdAt.toDate();
+};
+
 export default function LinkItem({ link }) {
+    const date = getDate(link);
+
     return (
         <LinkItemWrapper key={link.id}>
             <HorizontalLayout>
@@ -18,6 +27,7 @@ export default function LinkItem({ link }) {
                             {link.title || link.url}
                         </LinkItemLink>
                     </p>
+                    <p><small>{date.toLocaleString()}</small></p>
                     <p>{link.description}</p>
 
                     <InteractionToolBar {...link} />
