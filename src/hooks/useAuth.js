@@ -3,14 +3,24 @@ import { authentication, projectFirestore, signInProviders } from "../firebase/c
 
 const useAuth = () => {
     const [user, setUser] = useState(null);
+    const [error, setError] = useState(null);
     const [userConfig, setUserConfig] = useState({});
-    const signIn = (method = 'google') => authentication.signInWithPopup(signInProviders[method]);
+    const signIn = (method = 'google') => {
+        setError(null);
+        authentication
+            .signInWithPopup(signInProviders[method])
+            .catch((error) => setError(error));
+    }
     const signOut = () => authentication.signOut();
 
-    authentication.onAuthStateChanged(setUser);
+    useEffect(() => {
+        const unsub = authentication.onAuthStateChanged(setUser);
+        return unsub;
+    }, [setUser]);
 
     useEffect(() => {
         if (!user) {
+            setUserConfig({});
             return;
         }
 
@@ -20,7 +30,7 @@ const useAuth = () => {
             .then(doc => setUserConfig(doc.data() || {}));
     }, [user]);
 
-    return { user, userConfig, signIn, signOut }
+    return { user, error, userConfig, signIn, signOut }
 };
 
 export default useAuth;
