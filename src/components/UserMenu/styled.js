@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { createButtonPallete, grey } from "../../constants/colors";
-import { getSpacing, SMALL } from "../../constants/sizes";
+import { MEDIUM, SMALL } from "../../constants/sizes";
 
 export const UserMenuContainer = styled.div`
     position: absolute;
     top: 100%;
     right: 0;
     min-width: 200px;
-    margin-top: ${getSpacing()};
+    margin-top: ${MEDIUM};
     background-color: #fff;
     border-radius: 4px;
     filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
@@ -30,7 +30,7 @@ export const UserMenuList = styled.ul`
 `;
 
 export const UserMenuText = styled.p`
-    margin: ${getSpacing()};
+    margin: ${MEDIUM};
     font-size: 0.75em;
 `;
 
@@ -38,7 +38,7 @@ export const UserMenuButton = styled.button`
     display: block;
     width: 100%;
     border: 0 none;
-    padding: ${getSpacing()};
+    padding: ${MEDIUM};
 
     white-space: nowrap;
     font: inherit;

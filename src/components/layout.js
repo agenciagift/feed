@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
-import { EXTRA_SMALL, getContentWidth, getSpacing, SMALL } from "../constants/sizes";
+import { CONTENT_WIDTH, EXTRA_SMALL, MEDIUM, SMALL } from "../constants/sizes";
 
 export const Wrapper = styled.div`
     margin: auto;
-    padding-left: ${getSpacing()};
-    padding-right: ${getSpacing()};
-    max-width: ${getContentWidth()};
+    padding-left: ${MEDIUM};
+    padding-right: ${MEDIUM};
+    max-width: ${CONTENT_WIDTH};
 `;
 
 export const VerticalLayout = styled.div`
