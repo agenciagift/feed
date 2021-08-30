@@ -1,6 +1,7 @@
 import React from 'react';
 import { BaseInput } from '../form';
 import { VerticalLayout } from '../layout';
+import { ErrorMessage, Message } from '../messages';
 import PublishForm from './PublishForm';
 import useAddLinkState from './useAddLinkState';
 
@@ -21,11 +22,11 @@ function AddLink() {
                     value={state.url}
                     onChange={(e) => actions.setUrl(e.target.value)} />
 
-                {state.loading && <p style={{ color: 'blue' }}>Carregando...</p>}
+                {state.loading && <Message>Carregando...</Message>}
 
                 {state.showPublishForm && <PublishForm {...state} {...actions} />}
 
-                {state.error && <p style={{ color: 'red' }}>{`${state.error}`}</p>}
+                {state.error && <ErrorMessage>{`${state.error}`}</ErrorMessage>}
             </VerticalLayout>
         </form>
     );
