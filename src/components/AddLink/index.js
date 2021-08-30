@@ -1,4 +1,5 @@
 import React from 'react';
+import useAuth from '../../hooks/useAuth';
 import { BaseInput } from '../form';
 import { VerticalLayout } from '../layout';
 import { ErrorMessage, Message } from '../messages';
@@ -7,8 +8,15 @@ import useAddLinkState from './useAddLinkState';
 
 function AddLink() {
     const { state, actions } = useAddLinkState();
+    const { user, error } = useAuth();
 
-    if (!state.logged) {
+    if (error && !user) {
+        return (
+            <ErrorMessage>Erro no login. Tente novamente.</ErrorMessage>
+        );
+    }
+
+    if (!user) {
         return null;
     }
 

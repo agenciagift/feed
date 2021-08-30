@@ -72,9 +72,8 @@ const useAddLinkState = () => {
             title,
             description,
             image,
-            logged: !!user,
             loading: scrape.loading,
-            showPublishForm: scrape.isUrlValid && !scrape.loading && !error,
+            showPublishForm: scrape.isUrlValid && !scrape.loading,
         },
         actions: {
             setTitle,
