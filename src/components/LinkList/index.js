@@ -1,16 +1,32 @@
 import React from 'react';
 import useFirestore from '../../hooks/useFirestore';
 import LinkItem from '../LinkItem';
-import { LinkListWrapper } from './styled';
+import { LinkListElement, LinkListWrapper, NextButton, NextLoadingMessage } from './styled';
 
 export default function LinkList() {
-    const { docs } = useFirestore('links');
+    const { docs, next, loading } = useFirestore('links');
 
     return (
         <LinkListWrapper>
-            {docs.map((link) => (
-                <LinkItem key={link.id} link={link} />
-            ))}
+            <LinkListElement>
+                {docs.map((link) => (
+                    <LinkItem key={link.id} link={link} />
+                ))}
+            </LinkListElement>
+
+            {loading
+                ? (
+                    <NextLoadingMessage>
+                        Carregando...
+                    </NextLoadingMessage>
+                )
+                : (
+                    <NextButton
+                        onClick={() => next()}
+                    >
+                        Carregar mais
+                    </NextButton>
+                )}
         </LinkListWrapper>
     )
 }
