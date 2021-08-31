@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
 import { buttonColorsCss, grey } from "../constants/colors";
-import { SMALL } from "../constants/sizes";
+import { MEDIUM, SMALL } from "../constants/sizes";
 
 const baseFormControlStyle = css`
     font: inherit;
     line-height: 1.5;
-    padding: ${SMALL};
+    padding: ${SMALL} ${MEDIUM};
     border: 1px solid ${grey.mid};
-    border-radius: 0;
+    border-radius: 4px;
 
     ${({ expand }) => expand && css`
         flex: 1;
