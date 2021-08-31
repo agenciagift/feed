@@ -39,9 +39,12 @@ export const LinkInteractionButton = styled(NakedButton)`
     color: ${grey.mid};
     transition-property: background-color;
 
-    ${({ children }) => typeof children === 'string' && css`
-        padding-left: ${MEDIUM};
-        padding-right: ${MEDIUM};
+    ${({ children }) => typeof children === 'string'
+    ? css`
+        padding: ${SMALL} ${MEDIUM};
+    `
+    : css`
+        padding: ${SMALL};
     `}
 
     &:hover, &:focus, &:active {
