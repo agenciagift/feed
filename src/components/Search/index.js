@@ -17,7 +17,7 @@ export default function Search() {
         <SearchForm onSubmit={submitForm} focus={focus}>
             <SearchInput
                 type="text"
-                placeholder={focus || 'Clique para pesquisar'}
+                placeholder={focus ? '' : 'Clique para pesquisar'}
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
                 onFocus={() => setFocus(true)}
