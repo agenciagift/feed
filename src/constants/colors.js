@@ -23,6 +23,7 @@ export const uiColors = {
     idle: '#0062b5',
     hover: '#008aff',
     active: '#0062b5',
+    error: 'red',
 };
 
 export const buttonColorsCss = {
