@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { grey, uiColors } from "../../constants/colors";
-import { EXTRA_SMALL, LARGE, SMALL } from "../../constants/sizes";
+import { LARGE, MEDIUM, SMALL } from "../../constants/sizes";
 import { NakedButton } from "../form";
-import { BasePreviewImage } from "../layout";
+import { BasePreviewImage, HorizontalLayout } from "../layout";
 
 export const LinkItemWrapper = styled.li`
     margin-bottom: ${LARGE};
-    border-radius: ${EXTRA_SMALL};
+    border-radius: ${MEDIUM};
     box-shadow: 0 3px 0 ${grey.light};
 `;
 
@@ -23,7 +23,14 @@ export const LinkItemLink = styled.a`
 `;
 
 export const LinkPreviewImage = styled(BasePreviewImage)`
-    margin-right: ${LARGE}
+    margin-right: ${LARGE};
+    margin-bottom: ${LARGE};
+`;
+
+export const InteractionToolBarWrapper = styled(HorizontalLayout)`
+    justify-content: flex-end;
+    margin-top: ${MEDIUM};
+    margin-bottom: ${MEDIUM};
 `;
 
 export const LinkInteractionButton = styled(NakedButton)`
@@ -31,6 +38,11 @@ export const LinkInteractionButton = styled(NakedButton)`
     margin-right: ${SMALL};
     color: ${grey.mid};
     transition-property: background-color;
+
+    ${({ children }) => typeof children === 'string' && css`
+        padding-left: ${MEDIUM};
+        padding-right: ${MEDIUM};
+    `}
 
     &:hover, &:focus, &:active {
         color: ${({ activeColor }) => (activeColor && uiColors[activeColor]) || uiColors.hover};

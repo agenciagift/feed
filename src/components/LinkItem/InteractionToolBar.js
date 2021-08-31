@@ -2,15 +2,14 @@ import Bookmark from "../../assets/icons/Bookmark";
 import Copy from "../../assets/icons/Copy";
 import Heart from "../../assets/icons/Heart";
 import useAuth from "../../hooks/useAuth";
-import { HorizontalLayout } from "../layout";
 import DeleteButton from "./DeleteButton";
-import { LinkInteractionButton } from "./styled";
+import { InteractionToolBarWrapper, LinkInteractionButton } from "./styled";
 
 const InteractionToolBar = ({ id }) => {
     const { userConfig } = useAuth();
 
     return (
-        <HorizontalLayout style={{ justifyContent: 'flex-end' }}>
+        <InteractionToolBarWrapper>
             {userConfig.moderator && <DeleteButton id={id} />}
 
             <LinkInteractionButton
@@ -31,7 +30,7 @@ const InteractionToolBar = ({ id }) => {
             >
                 <Copy />
             </LinkInteractionButton>
-        </HorizontalLayout>
+        </InteractionToolBarWrapper>
     )
 }
 
