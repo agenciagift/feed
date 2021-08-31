@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { set } from '../../app/slices/search';
-import searchIcon from './loupe.png';
 import { SearchButton, SearchButtonImg, SearchForm, SearchInput } from './styled';
 
 export default function Search() {
@@ -18,15 +17,13 @@ export default function Search() {
         <SearchForm onSubmit={submitForm} focus={focus}>
             <SearchInput
                 type="text"
-                placeholder="Clique para pesquisar"
+                placeholder={focus || 'Clique para pesquisar'}
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)} />
             {focus && <SearchButton>
-                <SearchButtonImg
-                    src={searchIcon}
-                    alt="Pesquisar" />
+                <SearchButtonImg />
             </SearchButton>}
         </SearchForm>
     )

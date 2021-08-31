@@ -26,6 +26,8 @@ export const BaseTextArea = styled.textarea`
 export const BaseButton = styled.button`
     ${baseFormControlStyle}
     ${buttonColorsCss.primary}
+    display: inline-block;
+    vertical-align: middle;
     cursor: pointer;
 `;
 

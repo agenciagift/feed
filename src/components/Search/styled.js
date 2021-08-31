@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
+import Loupe from "../../assets/icons/Loupe";
 import { createButtonPallete } from "../../constants/colors";
-import { LARGE, SMALL } from "../../constants/sizes";
+import { MEDIUM } from "../../constants/sizes";
 import { BaseButton, BaseInput } from "../form";
 
 export const SearchForm = styled.form`
     display: flex;
+    align-items: center;
     flex: 1;
-    margin-left: ${LARGE};
-    margin-right: ${LARGE};
-    padding-left: ${SMALL};
-    padding-right: ${SMALL};
+    margin-left: ${MEDIUM};
+    margin-right: ${MEDIUM};
     border-radius: 999px;
 
     transition: 0.3s ease-in-out;
@@ -38,15 +38,17 @@ export const SearchInput = styled(BaseInput)`
 `;
 
 export const SearchButton = styled(BaseButton)`
+    display: flex;
+    align-items: center;
     background-color: transparent;
     border: 0 none;
+    padding-left: 0;
 
-    ${createButtonPallete('currentColor', 'transparent')}
+    ${createButtonPallete('transparent', 'transparent')}
 `;
 
-export const SearchButtonImg = styled.img`
+export const SearchButtonImg = styled(Loupe)`
     display: block;
-    width: 1em;
-    height: 1em;
-    opacity: 0.5;
+    width: 0.5em;
+    height: 0.5em;
 `;
