@@ -34,7 +34,11 @@ function AddLink() {
 
                 {state.showPublishForm && <PublishForm {...state} {...actions} />}
 
-                {state.error && <ErrorMessage>{`${state.error}`}</ErrorMessage>}
+                {state.error && (
+                    <ErrorMessage>
+                        Desculpe! Ocorreu um erro inesperado :(
+                    </ErrorMessage>
+                )}
             </VerticalLayout>
         </form>
     );

@@ -49,7 +49,7 @@ const useAddLinkState = () => {
             title,
             description,
             image,
-            author: user,
+            author: user.uid,
             createdAt: timestamp(),
             keywords: tokenize(`${title} ${description}`),
         };
@@ -68,7 +68,7 @@ const useAddLinkState = () => {
             await projectFirestore.collection('links').add(createNewPost());
             resetState();
         } catch (err) {
-            setError('Ocorreu um erro inesperado :( Desculpe.');
+            setError(err);
         }
     };
 
