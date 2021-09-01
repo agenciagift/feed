@@ -1,32 +1,65 @@
-import React from 'react';
-import useFirestore from '../../hooks/useFirestore';
+import React, { useContext } from 'react';
+import { GlobalContext } from '../../context/GlobalContext';
+import useLinks from '../../hooks/useLinks';
 import LinkItem from '../LinkItem';
-import { LinkListElement, LinkListWrapper, NextButton, NextLoadingMessage } from './styled';
+import { LinkFilterButton, LinkListElement, LinkListHeader, LinkListWrapper, NextButton, NextLoadingMessage } from './styled';
+
+const LoadMore = ({ next, loading, empty, ended }) => {
+    if (ended) {
+        return (
+            <p>Não há mais resultados.</p>
+        );
+    }
+
+    if (loading) {
+        return (
+            <NextLoadingMessage>
+                Carregando...
+            </NextLoadingMessage>
+        );
+    }
+
+    if (empty) {
+        return (
+            <p>Nada para exibir :( Tente uma pesquisa diferente.</p>
+        )
+    }
+
+    return (
+        <NextButton
+            onClick={() => next()}
+        >
+            Carregar mais
+        </NextButton>
+    );
+};
 
 export default function LinkList() {
-    const { docs, next, loading } = useFirestore('links');
+    const { search, requestSearch } = useContext(GlobalContext);
+    const { docs, next, loading, ended } = useLinks(search);
 
     return (
         <LinkListWrapper>
+            {search && (
+                <LinkListHeader>
+                    <p>Pesquisando por: <strong>{search}</strong>.</p>
+                    <LinkFilterButton onClick={() => requestSearch('')}>
+                        Remover filtro
+                    </LinkFilterButton>
+                </LinkListHeader>
+            )}
+
             <LinkListElement>
                 {docs.map((link) => (
                     <LinkItem key={link.id} link={link} />
                 ))}
             </LinkListElement>
 
-            {loading
-                ? (
-                    <NextLoadingMessage>
-                        Carregando...
-                    </NextLoadingMessage>
-                )
-                : (
-                    <NextButton
-                        onClick={() => next()}
-                    >
-                        Carregar mais
-                    </NextButton>
-                )}
+            <LoadMore
+                next={next}
+                loading={loading}
+                empty={!docs.length}
+                ended={ended} />
         </LinkListWrapper>
     )
 }

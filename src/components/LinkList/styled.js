@@ -1,12 +1,25 @@
 import styled from "styled-components";
-import { uiColors } from "../../constants/colors";
-import { EXTRA_LARGE, SMALL } from "../../constants/sizes";
+import { grey, uiColors } from "../../constants/colors";
+import { EXTRA_LARGE, EXTRA_SMALL, LARGE, MEDIUM, SMALL } from "../../constants/sizes";
 import { NakedButton } from "../form";
+import { HorizontalLayout } from "../layout";
 import { Message } from "../messages";
 
 export const LinkListWrapper = styled.div`
     margin-top: ${EXTRA_LARGE};
     margin-bottom: ${EXTRA_LARGE};
+`;
+
+export const LinkListHeader = styled(HorizontalLayout)`
+    margin-bottom: ${LARGE};
+    padding-bottom: ${EXTRA_SMALL};
+    border-bottom: 1px solid ${grey.mid};
+`;
+
+export const LinkFilterButton = styled(NakedButton)`
+    padding-top: ${EXTRA_SMALL};
+    padding-bottom: ${EXTRA_SMALL};
+    margin-left: ${MEDIUM};
 `;
 
 export const LinkListElement = styled.ul`

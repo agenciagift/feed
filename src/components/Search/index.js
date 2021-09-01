@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { set } from '../../app/slices/search';
+import React, { useContext, useState } from 'react';
+import { GlobalContext } from '../../context/GlobalContext';
 import { SearchButton, SearchButtonImg, SearchForm, SearchInput } from './styled';
 
 export default function Search() {
-    const [term, setTerm] = useState('');
+    const [text, setText] = useState('');
     const [focus, setFocus] = useState(false);
-    const dispatch = useDispatch();
+    const { requestSearch } = useContext(GlobalContext);
 
     const submitForm = (e) => {
         e.preventDefault();
-        dispatch(set({ term }));
+        requestSearch(text);
     };
 
     return (
@@ -18,8 +17,8 @@ export default function Search() {
             <SearchInput
                 type="text"
                 placeholder={focus ? '' : 'Clique para pesquisar'}
-                value={term}
-                onChange={(e) => setTerm(e.target.value)}
+                value={text}
+                onChange={(e) => setText(e.target.value)}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)} />
             {focus && <SearchButton>

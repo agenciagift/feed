@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { projectFirestore, timestamp } from "../../firebase/config";
 import useAuth from "../../hooks/useAuth";
 import useScrape from "../../hooks/useScrape";
+import { tokenize } from "../../util/links";
 
 const useAddLinkState = () => {
     const [error, setError] = useState('');
@@ -43,9 +44,15 @@ const useAddLinkState = () => {
     }, [scrape.error]);
 
     const createNewPost = () => {
-        const createdAt = timestamp();
-        const author = user.uid;
-        return { url, title, description, image, author, createdAt };
+        return {
+            url,
+            title,
+            description,
+            image,
+            author: user,
+            createdAt: timestamp(),
+            keywords: tokenize(`${title} ${description}`),
+        };
     };
 
     const addLink = async (e) => {
