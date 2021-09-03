@@ -66,7 +66,8 @@ const useScrape = (uri) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uri]);
 
-    return { isUrlValid, ...state };
+    const { data, error, loading } = state;
+    return { isUrlValid, data, error, loading };
 };
 
 export default useScrape;

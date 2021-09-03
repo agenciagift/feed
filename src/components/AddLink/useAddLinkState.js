@@ -34,7 +34,7 @@ const useAddLinkState = () => {
         }
         setTitle(scrape.data.title || '');
         setDescription(scrape.data.description || '');
-        setImage(scrape.data.image || '');
+        setImage(scrape.data.images[0] || '');
     }, [scrape.data]);
 
     useEffect(() => {
