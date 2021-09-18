@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
-import useLinks from '../../hooks/useLinks';
 import LinkItem from '../LinkItem';
 import { LinkFilterButton, LinkListElement, LinkListHeader, LinkListWrapper, NextButton, NextLoadingMessage } from './styled';
 
@@ -35,8 +34,10 @@ const LoadMore = ({ next, loading, empty, ended }) => {
 };
 
 export default function LinkList() {
-    const { search, requestSearch } = useContext(GlobalContext);
-    const { docs, next, loading, ended } = useLinks(search);
+    const {
+        links, search, loading, ended,
+        next, requestSearch,
+    } = useContext(GlobalContext);
 
     return (
         <LinkListWrapper>
@@ -50,7 +51,7 @@ export default function LinkList() {
             )}
 
             <LinkListElement>
-                {docs.map((link) => (
+                {links.map((link) => (
                     <LinkItem key={link.id} link={link} />
                 ))}
             </LinkListElement>
@@ -58,7 +59,7 @@ export default function LinkList() {
             <LoadMore
                 next={next}
                 loading={loading}
-                empty={!docs.length}
+                empty={!links.length}
                 ended={ended} />
         </LinkListWrapper>
     )
