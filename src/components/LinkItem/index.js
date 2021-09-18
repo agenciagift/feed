@@ -33,7 +33,10 @@ export default function LinkItem({ link }) {
                         <strong>{link.author?.displayName}</strong>
                         <span>{` em ${date.toLocaleString()}`}</span>
                     </LinkMetadata>
-                    <p>{link.description}</p>
+
+                    {link.description?.split('\n').filter((s) => s).map((text) => (
+                        <p>{text}</p>
+                    ))}
 
                     <InteractionToolBar {...link} />
                 </VerticalLayout>
