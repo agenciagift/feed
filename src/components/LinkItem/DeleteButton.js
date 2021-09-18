@@ -1,14 +1,15 @@
-import { projectFirestore } from "../../firebase/config";
+import { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 import { LinkInteractionButton } from "./styled";
 
 const DeleteButton = ({ id }) => {
-    const linkRef = projectFirestore.collection('links').doc(id);
+    const { remove } = useContext(GlobalContext);
 
     return (
         <LinkInteractionButton
             title="Apagar publicação"
             aria-label="Apagar publicação"
-            onClick={() => linkRef.delete()}
+            onClick={() => remove(id)}
         >
             DELETAR
         </LinkInteractionButton>

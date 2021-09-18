@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { projectFirestore, timestamp } from "../../firebase/config";
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
+import { timestamp } from "../../firebase/config";
 import useAuth from "../../hooks/useAuth";
 import useScrape from "../../hooks/useScrape";
 import { tokenize } from "../../util/links";
 
 const useAddLinkState = () => {
+    const { add } = useContext(GlobalContext);
     const [error, setError] = useState('');
     const [url, setUrl] = useState('');
     const [title, setTitle] = useState('');
@@ -66,7 +68,7 @@ const useAddLinkState = () => {
         }
 
         try {
-            await projectFirestore.collection('links').add(createNewPost());
+            await add(createNewPost());
             resetState();
         } catch (err) {
             setError(err);

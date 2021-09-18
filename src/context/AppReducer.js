@@ -39,6 +39,21 @@ const AppReducer = (state, action) => {
                 ended: !nextItem,
             };
 
+        case actionTypes.ADD_LINK:
+            return {
+                ...state,
+                links: [
+                    action.payload,
+                    ...state.links,
+                ],
+            };
+
+        case actionTypes.REMOVE_LINK:
+            return {
+                ...state,
+                links: state.links.filter(({ id }) => action.payload !== id),
+            };
+
         case actionTypes.REQUEST_NEXT_PAGE:
             return {
                 ...state,

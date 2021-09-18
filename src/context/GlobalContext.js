@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useReducer } from "react";
+import { projectFirestore } from "../firebase/config";
 import { createLinksRef } from "../util/links";
 import AppReducer, { actionTypes, initialState } from "./AppReducer";
 
@@ -23,10 +24,22 @@ export const GlobalProvider = ({ children }) => {
 
     const next = () => dispatch({ type: actionTypes.REQUEST_NEXT_PAGE });
 
+    const add = async (payload) => {
+        await projectFirestore.collection('links').add(payload);
+        dispatch({ type: actionTypes.ADD_LINK, payload });
+    };
+
+    const remove = async (payload) => {
+        await projectFirestore.collection('links').doc(payload).delete();
+        dispatch({ type: actionTypes.REMOVE_LINK, payload });
+    };
+
     return (
         <GlobalContext.Provider value={{
             ...state,
             next,
+            add,
+            remove,
             requestSearch,
         }}>
             {children}
