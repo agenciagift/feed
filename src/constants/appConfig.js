@@ -4,3 +4,7 @@ export const logo = {
     width: 49.25,
     height: 50,
 };
+
+export const collections = {
+    LINKS: 'links',
+};

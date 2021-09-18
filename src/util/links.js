@@ -1,6 +1,6 @@
+import { collections } from "../constants/appConfig";
 import { projectFirestore } from "../firebase/config";
 
-const COLLECTION = 'links';
 const PAGE_SIZE = 10;
 
 export const tokenize = (fullText) => {
@@ -12,7 +12,7 @@ export const tokenize = (fullText) => {
 };
 
 export const createLinksRef = (nextItem, searchTerm) => {
-    const collRef = projectFirestore.collection(COLLECTION)
+    const collRef = projectFirestore.collection(collections.LINKS)
         .orderBy('createdAt', 'desc')
         .startAt(nextItem)
         .limit(PAGE_SIZE + 1);
