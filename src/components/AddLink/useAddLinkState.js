@@ -44,12 +44,13 @@ const useAddLinkState = () => {
     }, [scrape.error]);
 
     const createNewPost = () => {
+        const { uid, displayName, photoURL } = user;
         return {
             url,
             title,
             description,
             image,
-            author: user.uid,
+            author: { uid, displayName, photoURL },
             createdAt: timestamp(),
             keywords: tokenize(`${title} ${description}`),
         };
