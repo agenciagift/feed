@@ -1,7 +1,7 @@
 import React from 'react';
 import { HorizontalLayout, VerticalLayout } from '../layout';
 import InteractionToolBar from './InteractionToolBar';
-import { LinkItemLink, LinkItemWrapper, LinkPreviewImage } from './styled';
+import { LinkItemLink, LinkItemWrapper, LinkMetadata, LinkPreviewImage } from './styled';
 
 const ROW_BREAKPOINT = 600;
 
@@ -29,7 +29,10 @@ export default function LinkItem({ link }) {
                             {link.title || link.url}
                         </LinkItemLink>
                     </p>
-                    <p><small>{date.toLocaleString()}</small></p>
+                    <LinkMetadata>
+                        <strong>{link.author?.displayName}</strong>
+                        <span>{` em ${date.toLocaleString()}`}</span>
+                    </LinkMetadata>
                     <p>{link.description}</p>
 
                     <InteractionToolBar {...link} />

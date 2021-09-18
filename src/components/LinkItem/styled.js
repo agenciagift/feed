@@ -22,6 +22,10 @@ export const LinkItemLink = styled.a`
     }
 `;
 
+export const LinkMetadata = styled.p`
+    font-size: 0.8em;
+`;
+
 export const LinkPreviewImage = styled(BasePreviewImage)`
     margin-right: ${LARGE};
     margin-bottom: ${LARGE};
