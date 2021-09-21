@@ -89,9 +89,13 @@ const useAddLinkState = () => {
             setTitle,
             setDescription,
             addLink,
-            setUrl: (url) => {
-                setUrl(url);
+            setUrl: (newUrl) => {
                 setError('');
+                setUrl(newUrl);
+                // avoiding previous data remain in the fields
+                setTitle(newUrl ? title : '');
+                setDescription(newUrl ? description : '');
+                setImage(newUrl ? image : '');
             },
         },
     }
