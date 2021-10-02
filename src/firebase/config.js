@@ -22,8 +22,12 @@ const signInProviders = {
     google: new firebase.auth.GoogleAuthProvider(),
 };
 
+const getSignInProvider = (method) => {
+    return signInProviders.google;
+};
+
 export {
-    signInProviders,
+    getSignInProvider,
     authentication,
     projectFirestore,
     timestamp,
