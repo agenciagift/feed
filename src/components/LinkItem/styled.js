@@ -38,6 +38,8 @@ export const InteractionToolBarWrapper = styled(HorizontalLayout)`
 `;
 
 export const LinkInteractionButton = styled(NakedButton)`
+    display: flex;
+    align-items: center;
     border-radius: 999px;
     margin-right: ${SMALL};
     color: ${grey.mid};
@@ -67,4 +69,9 @@ export const LinkInteractionButton = styled(NakedButton)`
             fill: currentColor;
         }
     }
+`;
+
+export const LinkItemButtonLabel = styled.span`
+    display: inline-block;
+    margin-left: ${SMALL};
 `;

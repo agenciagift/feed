@@ -1,6 +1,7 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { collections } from "../constants/appConfig";
 import { projectFirestore } from "../firebase/config";
+import { addLinkToCollection, removeLinkFromCollection } from "../firebase/userCollections";
 import useAuth from '../hooks/useAuth';
 import { createLinksRef } from "../util/links";
 import AppReducer, { actionTypes, initialState } from "./AppReducer";
@@ -38,41 +39,24 @@ export const GlobalProvider = ({ children }) => {
     };
 
     const like = async (payload) => {
-        if (!user) {
-            console.log('Invalid user :(');
-            return;
+        try {
+            await addLinkToCollection('Likes', payload, user);
+            dispatch({ type: actionTypes.ADD_LIKE, payload });
         }
-
-        const docRef = projectFirestore.collection(collections.LINKS).doc(payload);
-        const doc = await docRef.get();
-        if (!doc.exists) {
-            console.log('Document not found :(');
-            return;
+        catch (error) {
+            console.warn(error);
         }
-
-        const likesRef = projectFirestore.collection(collections.USERS)
-            .doc(user.uid).collection('lists').doc('Likes');
-        const likesData = await likesRef.get();
-
-        const batch = projectFirestore.batch();
-
-        if (likesData.exists) {
-            const { items } = (likesData.data() || {});
-            if (items instanceof Array && items.includes(doc.id)) {
-                console.log('Already liked =)');
-                return;
-            }
-            batch.update(likesRef, { items: [...items, doc.id] });
-        } else {
-            batch.set(likesRef, { name: 'Likes', items: [doc.id] });
-        }
-
-        const count = doc.data().likes || 0;
-        batch.update(docRef, { likes: count + 1 });
-
-        await batch.commit();
-        console.log('success');
     };
+
+    const removeLike = async (payload) => {
+        try {
+            await removeLinkFromCollection('Likes', payload, user);
+            dispatch({ type: actionTypes.REMOVE_LIKE, payload });
+        }
+        catch (error) {
+            console.warn(error);
+        }
+    }
 
     return (
         <GlobalContext.Provider value={{
@@ -81,6 +65,7 @@ export const GlobalProvider = ({ children }) => {
             add,
             remove,
             like,
+            removeLike,
             requestSearch,
         }}>
             {children}

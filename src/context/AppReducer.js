@@ -5,7 +5,8 @@ export const actionTypes = {
     SET_LINKS: 'SET_LINKS',
     ADD_LINK: 'ADD_LINK',
     REMOVE_LINK: 'REMOVE_LINK',
-    LIKE_LINK: 'LIKE_LINK',
+    ADD_LIKE: 'ADD_LIKE',
+    REMOVE_LIKE: 'REMOVE_LIKE',
     REQUEST_SEARCH: 'REQUEST_SEARCH',
     REQUEST_NEXT_PAGE: 'REQUEST_NEXT_PAGE',
 }
@@ -17,6 +18,15 @@ export const initialState = {
     loading: false,
     ended: false,
     links: [],
+};
+
+const incrementLikes = (link) => ({ ...link, likes: (link.likes || 0) + 1 });
+
+const decrementLikes = (link) => {
+    const likes = link.likes || 0;
+    return likes > 0
+        ? { ...link, likes: likes - 1 }
+        : link;
 };
 
 const AppReducer = (state, action) => {
@@ -55,13 +65,23 @@ const AppReducer = (state, action) => {
                 links: state.links.filter(({ id }) => action.payload !== id),
             };
 
-        case actionTypes.LIKE_LINK:
+        case actionTypes.ADD_LIKE:
             return {
                 ...state,
                 links: state.links.map((link) => (
                     action.payload !== link.id
                         ? link
-                        : { ...link, likes: (link.likes || 0) + 1 }
+                        : incrementLikes(link)
+                )),
+            };
+
+        case actionTypes.REMOVE_LIKE:
+            return {
+                ...state,
+                links: state.links.map((link) => (
+                    action.payload !== link.id
+                        ? link
+                        : decrementLikes(link)
                 )),
             };
 
