@@ -34,7 +34,7 @@ const InteractionToolBar = ({ id, likes }) => {
         <InteractionToolBarWrapper>
             {userConfig.moderator && <DeleteButton id={id} />}
 
-            <LinkInteractionButton
+            {user && <LinkInteractionButton
                 title="Marcar como gostei"
                 aria-label="Marcar como gostei"
                 onClick={handleLikeButton}
@@ -44,7 +44,7 @@ const InteractionToolBar = ({ id, likes }) => {
                 <LinkItemButtonLabel>
                     {likes || 0}
                 </LinkItemButtonLabel>
-            </LinkInteractionButton>
+            </LinkInteractionButton>}
             {/* <LinkInteractionButton
                 title="Salvar para a minha lista"
                 aria-label="Salvar para a minha lista"
