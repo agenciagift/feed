@@ -5,6 +5,7 @@ export const actionTypes = {
     SET_LINKS: 'SET_LINKS',
     ADD_LINK: 'ADD_LINK',
     REMOVE_LINK: 'REMOVE_LINK',
+    LIKE_LINK: 'LIKE_LINK',
     REQUEST_SEARCH: 'REQUEST_SEARCH',
     REQUEST_NEXT_PAGE: 'REQUEST_NEXT_PAGE',
 }
@@ -52,6 +53,16 @@ const AppReducer = (state, action) => {
             return {
                 ...state,
                 links: state.links.filter(({ id }) => action.payload !== id),
+            };
+
+        case actionTypes.LIKE_LINK:
+            return {
+                ...state,
+                links: state.links.map((link) => (
+                    action.payload !== link.id
+                        ? link
+                        : { ...link, likes: (link.likes || 0) + 1 }
+                )),
             };
 
         case actionTypes.REQUEST_NEXT_PAGE:
