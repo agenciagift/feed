@@ -34,8 +34,8 @@ export default function LinkItem({ link }) {
                         <span>{` em ${date.toLocaleString()}`}</span>
                     </LinkMetadata>
 
-                    {link.description?.split('\n').filter((s) => s).map((text) => (
-                        <p>{text}</p>
+                    {link.description?.split('\n').filter((s) => s).map((text, index) => (
+                        <p key={`${index}: ${text}`}>{text}</p>
                     ))}
 
                     <InteractionToolBar {...link} />
