@@ -42,7 +42,7 @@ export const LinkInteractionButton = styled(NakedButton)`
     align-items: center;
     border-radius: 999px;
     margin-right: ${SMALL};
-    color: ${grey.mid};
+    color: ${({ active }) => active ? uiColors.active : grey.mid};
     transition-property: background-color;
 
     ${({ children }) => typeof children === 'string'

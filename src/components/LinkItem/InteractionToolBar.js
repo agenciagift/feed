@@ -39,7 +39,7 @@ const InteractionToolBar = ({ id }) => {
                 title="Marcar como gostei"
                 aria-label="Marcar como gostei"
                 onClick={handleLikeButton}
-                style={{ color: isLiked ? 'red' : null }}
+                active={ isLiked }
             >
                 <Heart />
                 <LinkItemButtonLabel>
