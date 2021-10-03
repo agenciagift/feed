@@ -1,4 +1,5 @@
 import { parseDocs } from "../util/links";
+import firebase from 'firebase/app';
 
 export const actionTypes = {
     LOADING: 'LOADING',
@@ -10,7 +11,31 @@ export const actionTypes = {
     REQUEST_NEXT_PAGE: 'REQUEST_NEXT_PAGE',
 }
 
-export const initialState = {
+type Link = {
+    id: string;
+};
+
+type Stat = {
+    id: string;
+    likes: number;
+};
+
+type GlobalState = {
+    nextItem: firebase.firestore.DocumentData;
+    startAfter: firebase.firestore.DocumentData;
+    search: string;
+    loading: boolean;
+    ended: boolean;
+    links: Link[];
+    stats: Stat[];
+};
+
+type Action = {
+    type: string,
+    payload: any,
+}
+
+export const initialState: GlobalState = {
     nextItem: {},
     startAfter: {},
     search: '',
@@ -20,7 +45,7 @@ export const initialState = {
     stats: [],
 };
 
-const AppReducer = (state, action) => {
+const AppReducer = (state: GlobalState, action: Action) => {
     switch (action.type) {
         case actionTypes.LOADING:
             return {
