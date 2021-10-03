@@ -7,5 +7,6 @@ export const logo = {
 
 export const collections = {
     LINKS: 'links',
+    STATS: 'stats',
     USERS: 'users',
 };

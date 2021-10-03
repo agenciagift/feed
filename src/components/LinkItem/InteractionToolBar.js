@@ -10,11 +10,12 @@ import { InteractionToolBarWrapper, LinkInteractionButton, LinkItemButtonLabel }
 
 const isIncluded = (id, collection) => Array.isArray(collection) && collection.includes(id);
 
-const InteractionToolBar = ({ id, likes }) => {
-    const { like, removeLike } = useContext(GlobalContext);
+const InteractionToolBar = ({ id }) => {
+    const { stats, like, removeLike } = useContext(GlobalContext);
     const { user, userConfig } = useAuth();
     const [isLiked, setIsLiked] = useState(false);
     const { collection: likesCollection } = useUserCollection('Likes', user);
+    const linkStats = stats.find((item) => item.id === id);
 
     useEffect(() => {
         setIsLiked(isIncluded(id, likesCollection?.items));
@@ -42,7 +43,7 @@ const InteractionToolBar = ({ id, likes }) => {
             >
                 <Heart />
                 <LinkItemButtonLabel>
-                    {likes || 0}
+                    {linkStats?.likes || 0}
                 </LinkItemButtonLabel>
             </LinkInteractionButton>}
             {/* <LinkInteractionButton

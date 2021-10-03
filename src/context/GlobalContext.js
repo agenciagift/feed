@@ -26,6 +26,17 @@ export const GlobalProvider = ({ children }) => {
         });
     }, [state.search, state.startAfter]);
 
+    useEffect(() => {
+        projectFirestore.collection(collections.STATS).onSnapshot((snap) => {
+            let payload = [];
+            snap.forEach(doc => {
+                payload.push({ ...doc.data(), id: doc.id });
+            });
+
+            dispatch({ type: actionTypes.SET_STATS, payload });
+        });
+    }, []);
+
     const next = () => dispatch({ type: actionTypes.REQUEST_NEXT_PAGE });
 
     const add = async (payload) => {

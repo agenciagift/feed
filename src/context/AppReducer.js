@@ -2,6 +2,7 @@ import { parseDocs } from "../util/links";
 
 export const actionTypes = {
     LOADING: 'LOADING',
+    SET_STATS: 'SET_STATS',
     SET_LINKS: 'SET_LINKS',
     ADD_LINK: 'ADD_LINK',
     REMOVE_LINK: 'REMOVE_LINK',
@@ -18,6 +19,7 @@ export const initialState = {
     loading: false,
     ended: false,
     links: [],
+    stats: [],
 };
 
 const incrementLikes = (link) => ({ ...link, likes: (link.likes || 0) + 1 });
@@ -35,6 +37,12 @@ const AppReducer = (state, action) => {
             return {
                 ...state,
                 loading: true,
+            };
+
+        case actionTypes.SET_STATS:
+            return {
+                ...state,
+                stats: action.payload,
             };
 
         case actionTypes.SET_LINKS:

@@ -1,5 +1,6 @@
 import { collections } from "../constants/appConfig";
 import { projectFirestore } from "./config";
+import { getStatsByLinkId } from "./stats";
 
 export const getUserCollection = async (collectionName, user) => {
     const collectionRef = projectFirestore.collection(collections.USERS)
@@ -37,10 +38,11 @@ export const addLinkToCollection = async (collectionName, id, user) => {
         batch.set(collectionRef, { name: collectionName, items: [link.id] });
     }
 
-    const count = link.data().likes || 0;
-    batch.update(linkRef, { likes: count + 1 });
+    const stats = await getStatsByLinkId(id);
+    const count = stats.data.likes || 0;
+    batch.set(stats.ref, { likes: count + 1 }, { merge: true });
 
-    return batch.commit();
+    return await batch.commit();
 };
 
 export const removeLinkFromCollection = async (collectionName, id, user) => {
@@ -69,10 +71,11 @@ export const removeLinkFromCollection = async (collectionName, id, user) => {
         batch.update(collectionRef, { items: items.filter((item) => item !== link.id) });
     }
 
-    const count = link.data().likes || 0;
+    const stats = await getStatsByLinkId(id);
+    const count = stats.data.likes || 0;
     if (count > 0) {
-        batch.update(linkRef, { likes: count - 1 });
+        batch.set(stats.ref, { likes: count - 1 }, { merge: true });
     }
 
-    return batch.commit();
+    return await batch.commit();
 };
