@@ -3,6 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import Heart from "../../assets/icons/Heart";
 import { GlobalContext } from "../../context/GlobalContext";
+import { addLinkToCollection, removeLinkFromCollection } from "../../firebase/userCollections";
 import useAuth from "../../hooks/useAuth";
 import useUserCollection from "../../hooks/useUserCollection";
 import DeleteButton from "./DeleteButton";
@@ -11,7 +12,7 @@ import { InteractionToolBarWrapper, LinkInteractionButton, LinkItemButtonLabel }
 const isIncluded = (id, collection) => Array.isArray(collection) && collection.includes(id);
 
 const InteractionToolBar = ({ id }) => {
-    const { stats, like, removeLike } = useContext(GlobalContext);
+    const { stats } = useContext(GlobalContext);
     const { user, userConfig } = useAuth();
     const [isLiked, setIsLiked] = useState(false);
     const { collection: likesCollection } = useUserCollection('Likes', user);
@@ -22,12 +23,16 @@ const InteractionToolBar = ({ id }) => {
     }, [id, likesCollection?.items])
 
     const handleLikeButton = () => {
-        if (!user || isLiked) {
-            removeLike(id);
-            setIsLiked(false);
-        } else {
-            like(id);
-            setIsLiked(true);
+        try {
+            if (!user || isLiked) {
+                removeLinkFromCollection('Likes', id, user);
+                setIsLiked(false);
+            } else {
+                addLinkToCollection('Likes', id, user);
+                setIsLiked(true);
+            }
+        } catch (error) {
+            console.warn(error);
         }
     };
 

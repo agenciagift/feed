@@ -1,8 +1,6 @@
 import { createContext, useEffect, useReducer } from "react";
 import { collections } from "../constants/appConfig";
 import { projectFirestore } from "../firebase/config";
-import { addLinkToCollection, removeLinkFromCollection } from "../firebase/userCollections";
-import useAuth from '../hooks/useAuth';
 import { createLinksRef } from "../util/links";
 import AppReducer, { actionTypes, initialState } from "./AppReducer";
 
@@ -10,7 +8,6 @@ export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
-    const { user } = useAuth();
 
     const requestSearch = (text) => {
         dispatch({
@@ -49,34 +46,12 @@ export const GlobalProvider = ({ children }) => {
         dispatch({ type: actionTypes.REMOVE_LINK, payload });
     };
 
-    const like = async (payload) => {
-        try {
-            await addLinkToCollection('Likes', payload, user);
-            dispatch({ type: actionTypes.ADD_LIKE, payload });
-        }
-        catch (error) {
-            console.warn(error);
-        }
-    };
-
-    const removeLike = async (payload) => {
-        try {
-            await removeLinkFromCollection('Likes', payload, user);
-            dispatch({ type: actionTypes.REMOVE_LIKE, payload });
-        }
-        catch (error) {
-            console.warn(error);
-        }
-    }
-
     return (
         <GlobalContext.Provider value={{
             ...state,
             next,
             add,
             remove,
-            like,
-            removeLike,
             requestSearch,
         }}>
             {children}
