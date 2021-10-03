@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import LinkItem from '../LinkItem';
 import { LinkFilterButton, LinkListElement, LinkListHeader, LinkListWrapper, NextButton, NextLoadingMessage } from './styled';
