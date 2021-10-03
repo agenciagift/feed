@@ -2,10 +2,6 @@ import { collections } from "../constants/appConfig";
 import { projectFirestore } from "./config";
 
 export const getUserCollection = async (collectionName, user) => {
-    if (!user) {
-        throw Error('Invalid user :(');
-    }
-
     const collectionRef = projectFirestore.collection(collections.USERS)
         .doc(user.uid).collection('lists').doc(collectionName);
     const collectionData = await collectionRef.get();
@@ -15,13 +11,15 @@ export const getUserCollection = async (collectionName, user) => {
 
 export const addLinkToCollection = async (collectionName, id, user) => {
     if (!user) {
-        throw Error('Invalid user :(');
+        console.log('Invalid user :(');
+        return;
     }
 
     const linkRef = projectFirestore.collection(collections.LINKS).doc(id);
     const link = await linkRef.get();
     if (!link.exists) {
-        throw Error('Document not found :(');
+        console.log('Document not found :(');
+        return;
     }
 
     const { collectionRef, collectionData } = await getUserCollection(collectionName, user);
@@ -31,7 +29,8 @@ export const addLinkToCollection = async (collectionName, id, user) => {
     if (collectionData.exists) {
         const { items } = (collectionData.data() || {});
         if (items instanceof Array && items.includes(link.id)) {
-            throw Error(`Item ${link.id} already added to ${collectionName}.`);
+            console.log(`Item ${link.id} already added to ${collectionName}.`);
+            return;
         }
         batch.update(collectionRef, { items: [...items, link.id] });
     } else {
@@ -46,13 +45,15 @@ export const addLinkToCollection = async (collectionName, id, user) => {
 
 export const removeLinkFromCollection = async (collectionName, id, user) => {
     if (!user) {
-        throw Error('Invalid user :(');
+        console.log('Invalid user :(');
+        return;
     }
 
     const linkRef = projectFirestore.collection(collections.LINKS).doc(id);
     const link = await linkRef.get();
     if (!link.exists) {
-        throw Error('Document not found :(');
+        console.log('Document not found :(');
+        return;
     }
 
     const { collectionRef, collectionData } = await getUserCollection(collectionName, user);
@@ -62,7 +63,8 @@ export const removeLinkFromCollection = async (collectionName, id, user) => {
     if (collectionData.exists) {
         const { items } = (collectionData.data() || {});
         if (!(items instanceof Array) || !items.includes(link.id)) {
-            throw Error(`Item ${link.id} not in collection ${collectionName}`);
+            console.log(`Item ${link.id} not in collection ${collectionName}`);
+            return;
         }
         batch.update(collectionRef, { items: items.filter((item) => item !== link.id) });
     }
