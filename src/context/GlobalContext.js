@@ -29,8 +29,8 @@ export const GlobalProvider = ({ children }) => {
     const next = () => dispatch({ type: actionTypes.REQUEST_NEXT_PAGE });
 
     const add = async (payload) => {
-        await projectFirestore.collection(collections.LINKS).add(payload);
-        dispatch({ type: actionTypes.ADD_LINK, payload });
+        const response = await projectFirestore.collection(collections.LINKS).add(payload);
+        dispatch({ type: actionTypes.ADD_LINK, payload: { ...payload, id: response.id } });
     };
 
     const remove = async (payload) => {
