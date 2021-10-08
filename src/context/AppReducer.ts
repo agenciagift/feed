@@ -1,5 +1,5 @@
-import { parseDocs } from "../util/links";
 import firebase from 'firebase/app';
+import { parseDocs } from "../firebase/links";
 
 export const actionTypes = {
     LOADING: 'LOADING',

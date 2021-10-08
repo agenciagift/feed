@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import { timestamp } from "../../firebase/config";
+import { tokenize } from "../../firebase/links";
 import useAuth from "../../hooks/useAuth";
 import useScrape from "../../hooks/useScrape";
-import { tokenize } from "../../util/links";
 
 const useAddLinkState = () => {
     const { add } = useContext(GlobalContext);

@@ -1,7 +1,7 @@
 import { createContext, useEffect, useReducer } from "react";
 import { collections } from "../constants/appConfig";
 import { projectFirestore } from "../firebase/config";
-import { createLinksRef } from "../util/links";
+import { createLinksRef } from "../firebase/links";
 import AppReducer, { actionTypes, initialState } from "./AppReducer";
 
 export const GlobalContext = createContext(initialState);

@@ -1,5 +1,5 @@
 import { collections } from "../constants/appConfig";
-import { projectFirestore } from "../firebase/config";
+import { projectFirestore } from "./config";
 
 const PAGE_SIZE = 10;
 
