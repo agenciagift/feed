@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import UserMenu from '../UserMenu';
 import { UserAvatarButton, UserAvatarContainer, UserAvatarImg } from './styled';
@@ -12,8 +12,23 @@ export default function UserAvatar() {
         alt: user ? user.displayName : 'Faça login',
     };
 
+    const ref = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (ref.current && !(ref.current.contains(event.target))) {
+            setShowMenu(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    });
+
     return (
-        <UserAvatarContainer>
+        <UserAvatarContainer ref={ref}>
             <UserAvatarButton onClick={() => setShowMenu(!showMenu)}>
                 <UserAvatarImg
                     src={userAvatar.src}
