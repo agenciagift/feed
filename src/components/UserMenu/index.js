@@ -1,3 +1,4 @@
+import { signInMethods } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
 import { UserMenuButton, UserMenuContainer, UserMenuList, UserMenuText } from "./styled";
 
@@ -10,6 +11,28 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
 
     const close = () => setShowMenu(false);
 
+    const SignInButton = ({ method, children }) => {
+        return (
+            <UserMenuButton
+                onClick={() => {
+                    signIn(method);
+                    close();
+                }}>
+                {children}
+            </UserMenuButton>
+        );
+    };
+
+    const SignOutButton = () => (
+        <UserMenuButton
+            onClick={() => {
+                signOut();
+                close();
+            }}>
+            Sair
+        </UserMenuButton>
+    );
+
     return (
         <UserMenuContainer>
             {user
@@ -20,13 +43,7 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
                         </UserMenuText>
                         <UserMenuList>
                             <li>
-                                <UserMenuButton
-                                    onClick={() => {
-                                        signOut();
-                                        close();
-                                    }}>
-                                    Sair
-                                </UserMenuButton>
+                                <SignOutButton />
                             </li>
                         </UserMenuList>
                     </>
@@ -35,13 +52,9 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
                     <>
                         <UserMenuList>
                             <li>
-                                <UserMenuButton
-                                    onClick={() => {
-                                        signIn();
-                                        close();
-                                    }}>
-                                    Login
-                                </UserMenuButton>
+                                <SignInButton method={signInMethods.GOOGLE}>
+                                    Login com Google
+                                </SignInButton>
                             </li>
                         </UserMenuList>
                     </>

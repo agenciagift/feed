@@ -20,14 +20,25 @@ const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 const signInProviders = {
     google: new firebase.auth.GoogleAuthProvider(),
+    // facebook: new firebase.auth.FacebookAuthProvider(),
+    // github: new firebase.auth.GithubAuthProvider(),
+    // twitter: new firebase.auth.TwitterAuthProvider(),
 };
 
-const getSignInProvider = (method) => {
-    return signInProviders.google;
+const signInMethods = {
+    GOOGLE: 'google',
+    // FACEBOOK: 'facebook',
+    // GITHUB: 'github',
+    // TWITTER: 'twitter',
+};
+
+const getSignInProvider = (method = signInMethods.GOOGLE) => {
+    return signInProviders[method];
 };
 
 export {
     getSignInProvider,
+    signInMethods,
     authentication,
     projectFirestore,
     timestamp,
