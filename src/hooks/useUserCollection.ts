@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUserCollection } from "../firebase/userCollections";
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 
 type UserCollectionReference = firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | undefined;
 

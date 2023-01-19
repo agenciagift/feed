@@ -1,5 +1,6 @@
 import { signInMethods } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
+import React from 'react';
 import { UserMenuButton, UserMenuContainer, UserMenuList, UserMenuText } from "./styled";
 
 const UserMenu = ({ showMenu, setShowMenu }) => {
@@ -54,6 +55,11 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
                             <li>
                                 <SignInButton method={signInMethods.GOOGLE}>
                                     Login com Google
+                                </SignInButton>
+                            </li>
+                            <li>
+                                <SignInButton method={signInMethods.GITHUB}>
+                                    Login com GitHub
                                 </SignInButton>
                             </li>
                         </UserMenuList>

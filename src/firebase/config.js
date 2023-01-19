@@ -1,6 +1,6 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDrYdVo7ZeWU3AVYX8iFo7qWAK6gCpMgwQ",
@@ -21,14 +21,14 @@ const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 const signInProviders = {
     google: new firebase.auth.GoogleAuthProvider(),
     // facebook: new firebase.auth.FacebookAuthProvider(),
-    // github: new firebase.auth.GithubAuthProvider(),
+    github: new firebase.auth.GithubAuthProvider(),
     // twitter: new firebase.auth.TwitterAuthProvider(),
 };
 
 const signInMethods = {
     GOOGLE: 'google',
     // FACEBOOK: 'facebook',
-    // GITHUB: 'github',
+    GITHUB: 'github',
     // TWITTER: 'twitter',
 };
 

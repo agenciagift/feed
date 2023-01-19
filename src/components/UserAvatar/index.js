@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
 import UserMenu from '../UserMenu';
 import { UserAvatarButton, UserAvatarContainer, UserAvatarImg } from './styled';
