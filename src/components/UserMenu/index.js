@@ -56,6 +56,11 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
                                     Login com Google
                                 </SignInButton>
                             </li>
+                            <li>
+                                <SignInButton method={signInMethods.GITHUB}>
+                                    Login com GitHub
+                                </SignInButton>
+                            </li>
                         </UserMenuList>
                     </>
                 )
