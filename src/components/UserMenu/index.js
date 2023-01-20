@@ -1,6 +1,5 @@
 import { signInMethods } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
-import React from 'react';
 import { UserMenuButton, UserMenuContainer, UserMenuList, UserMenuText } from "./styled";
 
 const UserMenu = ({ showMenu, setShowMenu }) => {
