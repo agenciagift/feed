@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { getUserCollection } from "../firebase/userCollections";
+import { User } from "firebase/auth";
 import firebase from 'firebase/compat/app';
 
 type UserCollectionReference = firebase.firestore.DocumentReference<firebase.firestore.DocumentData> | undefined;
 
 type UserCollectionData = firebase.firestore.DocumentData | undefined;
 
-const useUserCollection = (collectionName: string, user: firebase.User) => {
+const useUserCollection = (collectionName: string, user: User) => {
     const [reference, setReference] = useState<UserCollectionReference>();
     const [collection, setCollection] = useState<UserCollectionData>();
 

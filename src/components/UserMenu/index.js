@@ -3,7 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import { UserMenuButton, UserMenuContainer, UserMenuList, UserMenuText } from "./styled";
 
 const UserMenu = ({ showMenu, setShowMenu }) => {
-    const { user, signIn, signOut } = useAuth();
+    const { user, signIn, logOut } = useAuth();
 
     if (!showMenu) {
         return null;
@@ -26,7 +26,7 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
     const SignOutButton = () => (
         <UserMenuButton
             onClick={() => {
-                signOut();
+                logOut();
                 close();
             }}>
             Sair

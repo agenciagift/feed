@@ -1,6 +1,6 @@
-import firebase from 'firebase/compat/app';
+import { User, signInWithPopup, getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from "react";
-import { authentication, getSignInProvider, projectFirestore } from "../firebase/config";
+import { getSignInProvider, projectFirestore } from "../firebase/config";
 
 type UserConfig = {
     admin: boolean;
@@ -15,19 +15,22 @@ const defaultUserConfig: UserConfig = {
 };
 
 const useAuth = () => {
-    const [user, setUser] = useState<firebase.User | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [error, setError] = useState(null);
     const [userConfig, setUserConfig] = useState<UserConfig>(defaultUserConfig);
     const signIn = (method = 'google') => {
         setError(null);
-        authentication
-            .signInWithPopup(getSignInProvider(method))
-            .catch((error) => setError(error));
+        signInWithPopup(getAuth(), getSignInProvider(method))
+        .catch((error) => setError(error));
     }
-    const signOut = () => authentication.signOut();
+    const logOut = () => {
+        setError(null);
+        signOut(getAuth())
+        .catch((error) => setError(error));
+    }
 
     useEffect(() => {
-        const unsub = authentication.onAuthStateChanged(setUser);
+        const unsub = onAuthStateChanged(getAuth(), setUser);
         return unsub;
     }, [setUser]);
 
@@ -53,7 +56,7 @@ const useAuth = () => {
             });
     }, [user]);
 
-    return { user, error, userConfig, signIn, signOut }
+    return { user, error, userConfig, signIn, logOut }
 };
 
 export default useAuth;
