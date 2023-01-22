@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import { GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
 import 'firebase/compat/firestore';
 
 const firebaseConfig = {
@@ -14,15 +14,14 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const authentication = firebase.auth();
 const projectFirestore = firebase.firestore();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 const signInProviders = {
-    google: new firebase.auth.GoogleAuthProvider(),
-    // facebook: new firebase.auth.FacebookAuthProvider(),
-    github: new firebase.auth.GithubAuthProvider(),
-    // twitter: new firebase.auth.TwitterAuthProvider(),
+    google: new GoogleAuthProvider(),
+    // facebook: new FacebookAuthProvider(),
+    github: new GithubAuthProvider(),
+    // twitter: new TwitterAuthProvider(),
 };
 
 const signInMethods = {
@@ -39,7 +38,6 @@ const getSignInProvider = (method = signInMethods.GOOGLE) => {
 export {
     getSignInProvider,
     signInMethods,
-    authentication,
     projectFirestore,
     timestamp,
 };
