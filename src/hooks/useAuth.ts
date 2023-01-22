@@ -1,4 +1,5 @@
 import { User, signInWithPopup, getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import { getSignInProvider, projectFirestore } from "../firebase/config";
 
@@ -40,9 +41,8 @@ const useAuth = () => {
             return;
         }
 
-        projectFirestore.collection('userConfig')
-            .doc(user.uid)
-            .get()
+        const docRef = doc(projectFirestore, 'userConfig', user.uid);
+        getDoc(docRef)
             .then(doc => {
                 const docData = doc.data();
                 const data: UserConfig = docData

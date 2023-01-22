@@ -1,6 +1,6 @@
-import firebase from 'firebase/compat/app';
 import { GoogleAuthProvider, GithubAuthProvider } from 'firebase/auth';
-import 'firebase/compat/firestore';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, serverTimestamp } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDrYdVo7ZeWU3AVYX8iFo7qWAK6gCpMgwQ",
@@ -12,10 +12,10 @@ const firebaseConfig = {
     measurementId: "G-KE55SGFC5L"
 };
 
-firebase.initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
-const projectFirestore = firebase.firestore();
-const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+const projectFirestore = getFirestore();
+const timestamp = serverTimestamp();
 
 const signInProviders = {
     google: new GoogleAuthProvider(),
