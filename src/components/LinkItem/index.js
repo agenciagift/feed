@@ -7,7 +7,7 @@ const ROW_BREAKPOINT = 600;
 
 const getDate = (link) => {
     if (!(link?.createdAt?.toDate && link.createdAt.toDate instanceof Function)) {
-        return new Date(0);
+        return new Date();
     }
     return link.createdAt.toDate();
 };

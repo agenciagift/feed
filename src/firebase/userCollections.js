@@ -63,7 +63,6 @@ export const removeLinkFromCollection = async (collectionName, id, user) => {
     const batch = writeBatch(projectFirestore);
 
     if (collectionData.exists) {
-        console.log(collectionData.data());
         const { items } = (collectionData.data() || {});
         if (!(items instanceof Array) || !items.includes(link.id)) {
             console.log(`Item ${link.id} not in collection ${collectionName}`);

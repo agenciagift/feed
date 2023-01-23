@@ -3,7 +3,7 @@ import { collections } from "../constants/appConfig";
 import { projectFirestore } from "../firebase/config";
 import { createLinksRef } from "../firebase/links";
 import AppReducer, { actionTypes, initialState } from "./AppReducer";
-import { doc,  addDoc, collection, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
+import { doc, addDoc, collection, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
 
 export const GlobalContext = createContext(initialState);
 
