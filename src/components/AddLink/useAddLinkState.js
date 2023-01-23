@@ -53,7 +53,7 @@ const useAddLinkState = () => {
             description,
             image,
             author: { uid, displayName, photoURL },
-            createdAt: timestamp(),
+            createdAt: timestamp,
             keywords: tokenize(`${title} ${description}`),
         };
     };

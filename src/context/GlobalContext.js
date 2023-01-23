@@ -3,6 +3,7 @@ import { collections } from "../constants/appConfig";
 import { projectFirestore } from "../firebase/config";
 import { createLinksRef } from "../firebase/links";
 import AppReducer, { actionTypes, initialState } from "./AppReducer";
+import { doc, addDoc, collection, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
 
 export const GlobalContext = createContext(initialState);
 
@@ -18,13 +19,15 @@ export const GlobalProvider = ({ children }) => {
 
     useEffect(() => {
         dispatch({ type: actionTypes.LOADING });
-        createLinksRef(state.startAfter, state.search).get().then(payload => {
+        const linksRef = createLinksRef(state.startAfter, state.search);
+        getDocs(linksRef).then(payload => {
             dispatch({ type: actionTypes.SET_LINKS, payload });
         });
     }, [state.search, state.startAfter]);
 
     useEffect(() => {
-        projectFirestore.collection(collections.STATS).onSnapshot((snap) => {
+        const collRef = collection(projectFirestore, collections.STATS);
+        onSnapshot(collRef, (snap) => {
             let payload = [];
             snap.forEach(doc => {
                 payload.push({ ...doc.data(), id: doc.id });
@@ -37,12 +40,12 @@ export const GlobalProvider = ({ children }) => {
     const next = () => dispatch({ type: actionTypes.REQUEST_NEXT_PAGE });
 
     const add = async (payload) => {
-        const response = await projectFirestore.collection(collections.LINKS).add(payload);
+        const response = await addDoc(collection(projectFirestore, collections.LINKS), payload);
         dispatch({ type: actionTypes.ADD_LINK, payload: { ...payload, id: response.id } });
     };
 
     const remove = async (payload) => {
-        await projectFirestore.collection(collections.LINKS).doc(payload).delete();
+        await deleteDoc(doc(projectFirestore, collections.LINKS, payload));
         dispatch({ type: actionTypes.REMOVE_LINK, payload });
     };
 

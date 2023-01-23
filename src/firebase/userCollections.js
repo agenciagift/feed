@@ -1,11 +1,11 @@
 import { collections } from "../constants/appConfig";
 import { projectFirestore } from "./config";
 import { getStatsByLinkId } from "./stats";
+import { doc, getDoc, writeBatch } from 'firebase/firestore';
 
 export const getUserCollection = async (collectionName, user) => {
-    const collectionRef = projectFirestore.collection(collections.USERS)
-        .doc(user.uid).collection('lists').doc(collectionName);
-    const collectionData = await collectionRef.get();
+    const collectionRef = doc(projectFirestore, collections.USERS, user.uid, 'lists', collectionName);
+    const collectionData = await getDoc(collectionRef);
 
     return { collectionRef, collectionData };
 };
@@ -16,8 +16,8 @@ export const addLinkToCollection = async (collectionName, id, user) => {
         return;
     }
 
-    const linkRef = projectFirestore.collection(collections.LINKS).doc(id);
-    const link = await linkRef.get();
+    const linkRef = doc(projectFirestore, collections.LINKS, id);
+    const link = await getDoc(linkRef);
     if (!link.exists) {
         console.log('Document not found :(');
         return;
@@ -25,7 +25,7 @@ export const addLinkToCollection = async (collectionName, id, user) => {
 
     const { collectionRef, collectionData } = await getUserCollection(collectionName, user);
 
-    const batch = projectFirestore.batch();
+    const batch = writeBatch(projectFirestore);
 
     if (collectionData.exists) {
         const { items } = (collectionData.data() || {});
@@ -51,8 +51,8 @@ export const removeLinkFromCollection = async (collectionName, id, user) => {
         return;
     }
 
-    const linkRef = projectFirestore.collection(collections.LINKS).doc(id);
-    const link = await linkRef.get();
+    const linkRef = doc(projectFirestore, collections.LINKS, id);
+    const link = await getDoc(linkRef);
     if (!link.exists) {
         console.log('Document not found :(');
         return;
@@ -60,7 +60,7 @@ export const removeLinkFromCollection = async (collectionName, id, user) => {
 
     const { collectionRef, collectionData } = await getUserCollection(collectionName, user);
 
-    const batch = projectFirestore.batch();
+    const batch = writeBatch(projectFirestore);
 
     if (collectionData.exists) {
         const { items } = (collectionData.data() || {});
