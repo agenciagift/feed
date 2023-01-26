@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { projectFirestore, timestamp } from "../firebase/config";
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 const urlRegex = /^(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._+~#=]+\.[a-z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)?/;
 
@@ -33,13 +34,13 @@ const useScrape = (uri) => {
 
         SCRAPE_CACHE.set(uri, null);
 
-        const doc = projectFirestore.collection('scrape').doc(encodeURIComponent(uri));
+        const docRef = doc(projectFirestore, 'scrape', encodeURIComponent(uri));
 
         const tryFetchScraping = async () => {
             try {
                 const fetchedAt = timestamp();
                 const scrapeResponse = await fetchScraping(uri);
-                await doc.set(scrapeResponse);
+                await setDoc(docRef, scrapeResponse);
                 SCRAPE_CACHE.set(uri, scrapeResponse);
                 setState({ ...scrapeResponse, fetchedAt, loading: false });
             } catch (error) {
@@ -50,7 +51,7 @@ const useScrape = (uri) => {
 
         setState({ data: null, error: null, loading: true });
 
-        doc.get()
+        getDoc(docRef)
             .then(resp => {
                 const payload = resp.data();
                 if (!payload) {

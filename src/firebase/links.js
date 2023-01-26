@@ -1,5 +1,6 @@
 import { collections } from "../constants/appConfig";
 import { projectFirestore } from "./config";
+import { collection, query, where, orderBy, startAt, limit } from 'firebase/firestore';
 
 const PAGE_SIZE = 10;
 
@@ -12,19 +13,21 @@ export const tokenize = (fullText) => {
 };
 
 export const createLinksRef = (nextItem, searchTerm) => {
-    const collRef = projectFirestore.collection(collections.LINKS)
-        .orderBy('createdAt', 'desc')
-        .startAt(nextItem)
-        .limit(PAGE_SIZE + 1);
+    const collRef = collection(projectFirestore, collections.LINKS);
+
+    const linksRef = query(collRef,
+        orderBy('createdAt', 'desc'),
+        startAt(nextItem),
+        limit(PAGE_SIZE + 1));
 
     if (searchTerm) {
         const tokens = tokenize(searchTerm);
         if (tokens.length) {
-            return collRef.where('keywords', 'array-contains-any', tokens);
+            return query(collRef, where('keywords', 'array-contains-any', tokens));
         }
     }
 
-    return collRef;
+    return linksRef;
 };
 
 export const parseDocs = (snap) => {

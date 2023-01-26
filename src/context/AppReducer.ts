@@ -1,4 +1,4 @@
-import firebase from 'firebase/compat/app';
+import { DocumentData } from 'firebase/firestore';
 import { parseDocs } from "../firebase/links";
 
 export const actionTypes = {
@@ -21,8 +21,8 @@ type Stat = {
 };
 
 type GlobalState = {
-    nextItem: firebase.firestore.DocumentData;
-    startAfter: firebase.firestore.DocumentData;
+    nextItem: DocumentData;
+    startAfter: DocumentData;
     search: string;
     loading: boolean;
     ended: boolean;
