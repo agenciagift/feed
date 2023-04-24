@@ -4,6 +4,7 @@ import { logo } from '../../constants/appConfig';
 import Search from '../Search';
 import UserAvatar from '../UserAvatar';
 import { HeaderContainer, HeaderWrapper } from './styled';
+import Favorites from "../FavoritesLink";
 
 export default function Header() {
     return (
@@ -12,6 +13,7 @@ export default function Header() {
                 <img {...logo} alt={logo.alt} />
                 <Search />
                 <UserAvatar />
+                <Favorites />
             </HeaderWrapper>
         </HeaderContainer>
     )

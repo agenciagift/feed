@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { grey } from "../../constants/colors";
-import { SMALL } from "../../constants/sizes";
+import { MEDIUM, SMALL } from "../../constants/sizes";
 import { Wrapper } from "../layout";
 
 export const HeaderContainer = styled.header`
@@ -13,4 +13,5 @@ export const HeaderWrapper = styled(Wrapper)`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: ${MEDIUM};
 `;

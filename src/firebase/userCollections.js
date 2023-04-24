@@ -1,7 +1,7 @@
 import { collections } from "../constants/appConfig";
 import { projectFirestore } from "./config";
 import { getStatsByLinkId } from "./stats";
-import { doc, getDoc, writeBatch } from 'firebase/firestore';
+import { doc, getDoc, writeBatch, query, where, getDocs, collection } from 'firebase/firestore';
 
 export const getUserCollection = async (collectionName, user) => {
     const collectionRef = doc(projectFirestore, collections.USERS, user.uid, 'lists', collectionName);
@@ -27,8 +27,8 @@ export const addLinkToCollection = async (collectionName, id, user) => {
 
     const batch = writeBatch(projectFirestore);
 
-    if (collectionData.exists) {
-        const { items } = (collectionData.data() || {});
+    if (collectionData.exists && collectionData.data()) {
+        const { items = [] } = (collectionData.data() || {});
         if (items instanceof Array && items.includes(link.id)) {
             console.log(`Item ${link.id} already added to ${collectionName}.`);
             return;
@@ -37,7 +37,6 @@ export const addLinkToCollection = async (collectionName, id, user) => {
     } else {
         batch.set(collectionRef, { name: collectionName, items: [link.id] });
     }
-
     const stats = await getStatsByLinkId(id);
     const count = stats.data.likes || 0;
     batch.set(stats.ref, { likes: count + 1 }, { merge: true });
@@ -79,3 +78,25 @@ export const removeLinkFromCollection = async (collectionName, id, user) => {
 
     return await batch.commit();
 };
+
+export const getUserLinksFromCollection = async(collectionName, user) => {
+    const { collectionData } = await getUserCollection(collectionName, user);
+    if (!collectionData.data()) return [];
+
+    const userLinks = getAllUserLinksFromCollection(collectionData.data().items);
+    return userLinks;
+};
+
+const getAllUserLinksFromCollection = async(ids) => {
+    const linksRef = collection(projectFirestore, 'links');
+    const linksQuery = query(linksRef, where("__name__", "in", ids));
+    const linksDocs = await getDocs(linksQuery);
+    const parsedDocs = linksDocs.docs.map((document) => {
+        return {
+            title: document.data().title, 
+            url: document.data().url,
+            createdAt: document.data().createdAt,
+        };
+    });
+    return parsedDocs || [];
+}
