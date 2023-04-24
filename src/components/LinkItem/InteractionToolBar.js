@@ -12,23 +12,37 @@ import { InteractionToolBarWrapper, LinkInteractionButton, LinkItemButtonLabel }
 const isIncluded = (id, collection) => Array.isArray(collection) && collection.includes(id);
 
 const InteractionToolBar = ({ id }) => {
-    const { stats } = useContext(GlobalContext);
-    const { user, userConfig } = useAuth();
     const [isLiked, setIsLiked] = useState(false);
+    const { stats, setUserLikes, unsetUserLike } = useContext(GlobalContext);
+    const { user, userConfig } = useAuth();
     const { collection: likesCollection } = useUserCollection('Likes', user);
     const linkStats = stats.find((item) => item.id === id);
+    
 
     useEffect(() => {
         setIsLiked(isIncluded(id, likesCollection?.items));
-    }, [id, likesCollection?.items])
+    }, [id, likesCollection?.items]);
+
+    const parseLike = (likeDocument) => {
+        return {
+            title: likeDocument.title,
+            url: likeDocument.url,
+        }
+    }
 
     const handleLikeButton = () => {
         try {
             if (!user || isLiked) {
-                removeLinkFromCollection('Likes', id, user);
+                removeLinkFromCollection('Likes', id, user).then((link) => {
+                    const parsedLink = parseLike(link);
+                    unsetUserLike(parsedLink);
+                });
                 setIsLiked(false);
             } else {
-                addLinkToCollection('Likes', id, user);
+                addLinkToCollection('Likes', id, user).then((link) => {
+                    const parsedLink = parseLike(link);
+                    setUserLikes(parsedLink);
+                });
                 setIsLiked(true);
             }
         } catch (error) {

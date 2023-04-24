@@ -40,8 +40,9 @@ export const addLinkToCollection = async (collectionName, id, user) => {
     const stats = await getStatsByLinkId(id);
     const count = stats.data.likes || 0;
     batch.set(stats.ref, { likes: count + 1 }, { merge: true });
-
-    return await batch.commit();
+    
+    await batch.commit();
+    return link.data(); 
 };
 
 export const removeLinkFromCollection = async (collectionName, id, user) => {
@@ -76,7 +77,8 @@ export const removeLinkFromCollection = async (collectionName, id, user) => {
         batch.set(stats.ref, { likes: count - 1 }, { merge: true });
     }
 
-    return await batch.commit();
+    await batch.commit();
+    return link.data(); 
 };
 
 export const getUserLinksFromCollection = async(collectionName, user) => {
@@ -87,7 +89,7 @@ export const getUserLinksFromCollection = async(collectionName, user) => {
     return userLinks;
 };
 
-const getAllUserLinksFromCollection = async(ids) => {
+export const getAllUserLinksFromCollection = async(ids) => {
     const linksRef = collection(projectFirestore, 'links');
     const linksQuery = query(linksRef, where("__name__", "in", ids));
     const linksDocs = await getDocs(linksQuery);
@@ -95,7 +97,6 @@ const getAllUserLinksFromCollection = async(ids) => {
         return {
             title: document.data().title, 
             url: document.data().url,
-            createdAt: document.data().createdAt,
         };
     });
     return parsedDocs || [];

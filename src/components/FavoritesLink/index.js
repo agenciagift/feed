@@ -1,27 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FavoritesLink, FavoritesSidebarContainer } from "./styled";
-import { getUserLinksFromCollection } from "../../firebase/userCollections";
 import useAuth from '../../hooks/useAuth';
 import Sidebar from "../FavoritesSidebar";
+import useUserLikes from "../../hooks/useUserLikes";
 
 export default function Favorites() {
     const [showSidebar, setShowSidebar] = useState(false);
     const { user } = useAuth();
-    const [likes, setLikes] = useState(null);
+    const { initialLikes } = useUserLikes(user);
 
-    useEffect(() => {
-        async function getUserLikes() {
-            const likes = await getUserLinksFromCollection('Likes', user);
-            setLikes(likes);
-        };
-
-        if (user) {
-            setLikes(null);
-            getUserLikes();
-        };
-    }, [user]);
-
-    return (
+    return !user || !initialLikes ? null : (
         <>
             <FavoritesLink onClick={() => setShowSidebar(!showSidebar)}>
                 Favoritos
@@ -30,7 +18,7 @@ export default function Favorites() {
             <FavoritesSidebarContainer showSidebar={showSidebar}>
                 <Sidebar
                     showSidebar={showSidebar}
-                    likes={likes} 
+                    initialLikes={initialLikes || []} 
                     setShowSidebar={setShowSidebar}
                 />
             </FavoritesSidebarContainer>
