@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { User } from "firebase/auth";
-import { getUserLinksFromCollection } from "../firebase/userCollections";
-import { collection, query, where } from "firebase/firestore";
+import { getUserCollection } from "../firebase/userCollections";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { projectFirestore } from "../firebase/config";
 
 type UserLikes = {
@@ -13,26 +13,29 @@ const useUserLikes = (user: User) => {
     const [initialLikes, setInitialLikes] = useState<UserLikes[] | null>(null);
 
     useEffect(() => {
-        async function getUserLikes () {
-            const likes = await getUserLinksFromCollection('Likes', user) as UserLikes[];
-            setInitialLikes(likes);
-        };
-
+        let snapshoptRef;
         if (user) {
             setInitialLikes(null);
-            getUserLikes();
-        };
-        console.log('user', user);
-        
-        // const linksRef = collection(projectFirestore, 'userConfig');
-        // const linksQuery = query(linksRef, where('uid', '==', user.uid));
-        // const unsubscribe = linksQuery.onSnapshot((snapshot) => {
-        //     const likes = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        //     setInitialLikes(likes);
-        // });
+            getUserCollection('Likes', user).then((userRef) => {
+                if (!userRef?.collectionData?.data()?.items) {
+                    setInitialLikes([]);
+                    return;
+                };
+                const userLinks = userRef.collectionData.data()!.items;
+                const linksRef = collection(projectFirestore, 'links');
+                let parsedDocs: UserLikes[] = [];
+                const linksQuery = query(linksRef, where("__name__", "in", userLinks));
+                snapshoptRef = onSnapshot(linksQuery, (snapshot) => {                    
+                    snapshot.forEach(doc => {
+                        parsedDocs.push({url: doc.data().url, title: doc.data().title});
+                    });
+                    setInitialLikes(parsedDocs);
+                });
 
-        // return unsubscribe;
-    }, [user]);
+            });
+        } 
+        return snapshoptRef;
+    }, [user])
 
     return { initialLikes };
 }
