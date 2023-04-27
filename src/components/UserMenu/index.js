@@ -44,7 +44,7 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
                         <UserMenuText>
                             {user.displayName}
                         </UserMenuText>
-                        <UserMenuButton onClick={() => toggleSidebar()}>
+                        <UserMenuButton onClick={toggleSidebar}>
                             Favoritos
                         </UserMenuButton>
                         <UserMenuList>
