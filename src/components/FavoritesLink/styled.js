@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { uiColors } from "../../constants/colors";
 
-export const FavoritesList = styled.ul`
+export const FavoritesTitle = styled.ul`
     position: relative;
     list-style-type: none;
     padding: 0;
@@ -26,6 +26,5 @@ const fadeIn = keyframes`
 
 export const FavoritesSidebarContainer = styled.div`
     opacity: ${props => props.isSidebarOpen ? '1' : '0'};
-    transition: opacity 0.5s ease-in-out;
-    animation: ${fadeIn} 0.5s ease-in-out;
+    animation: ${fadeIn} 0.2s ease-in-out;
 `;

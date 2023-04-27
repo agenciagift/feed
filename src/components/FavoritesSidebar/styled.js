@@ -41,7 +41,7 @@ export const SidebarTitle = styled.h2`
     color: ${grey.light};
 `
 
-export const SidebarLinks = styled.a`
+export const SidebarLink = styled.a`
     display: block;
     text-decoration: none;
     color: ${grey.light};

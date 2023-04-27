@@ -13,5 +13,4 @@ export const HeaderWrapper = styled(Wrapper)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: ${MEDIUM};
 `;

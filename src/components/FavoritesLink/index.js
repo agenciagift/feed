@@ -1,4 +1,4 @@
-import { FavoritesList, FavoritesSidebarContainer } from "./styled";
+import { FavoritesTitle, FavoritesSidebarContainer } from "./styled";
 import useAuth from '../../hooks/useAuth';
 import SidebarPanel from "../FavoritesSidebar";
 import useUserLikes from "../../hooks/useUserLikes";
@@ -10,11 +10,7 @@ export default function FavoritesPanel() {
     const { initialLikes } = useUserLikes(user);
     const { isSidebarOpen } = useContext(GlobalContext);
     return !user || !initialLikes ? null : (
-        <>
-            <FavoritesList>
-                Favoritos
-            </FavoritesList>
-            
+        <>  
             <FavoritesSidebarContainer isSidebarOpen={isSidebarOpen}>
                 <SidebarPanel
                     initialLikes={initialLikes || []} 

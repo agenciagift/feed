@@ -8,7 +8,6 @@ import { GlobalContext } from "./context/GlobalContext";
 
 function App() {
   const { isSidebarOpen } = useContext(GlobalContext);
-  console.log('isSidebarOpen', isSidebarOpen);
   return (
     <>
       <Header />

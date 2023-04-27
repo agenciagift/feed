@@ -36,22 +36,13 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
         </UserMenuButton>
     );
 
-    const firstNameSecondNameCapital = (name) => {
-        if (!name) return;
-
-        const [firstName, lastName] = name.split(' ');
-        if (!lastName) return `${firstName.charAt(0).toUpperCase()}`
-
-        return `${firstName.charAt(0).toUpperCase()}${firstName.slice(1)} ${lastName.charAt(0).toUpperCase()}${lastName.slice(1)}`;
-    }
-
     return (
         <UserMenuContainer>
             {user
                 ? (
                     <>
                         <UserMenuText>
-                            {firstNameSecondNameCapital(user.displayName)}
+                            {user.displayName}
                         </UserMenuText>
                         <UserMenuButton onClick={() => toggleSidebar()}>
                             Favoritos
