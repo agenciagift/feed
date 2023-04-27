@@ -4,11 +4,17 @@ import { projectFirestore } from "../firebase/config";
 import { createLinksRef } from "../firebase/links";
 import AppReducer, { actionTypes, initialState } from "./AppReducer";
 import { doc, addDoc, collection, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
+import { useState } from 'react';
 
 export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen)
+    };
 
     const requestSearch = (text) => {
         dispatch({
@@ -72,6 +78,8 @@ export const GlobalProvider = ({ children }) => {
             requestSearch,
             setUserLikes,
             unsetUserLike,
+            toggleSidebar,
+            isSidebarOpen,
         }}>
             {children}
         </GlobalContext.Provider>

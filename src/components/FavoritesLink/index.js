@@ -1,25 +1,23 @@
-import { useState } from 'react';
-import { FavoritesLink, FavoritesSidebarContainer } from "./styled";
+import { FavoritesList, FavoritesSidebarContainer } from "./styled";
 import useAuth from '../../hooks/useAuth';
-import Sidebar from "../FavoritesSidebar";
+import SidebarPanel from "../FavoritesSidebar";
 import useUserLikes from "../../hooks/useUserLikes";
+import { useContext } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
-export default function Favorites() {
-    const [showSidebar, setShowSidebar] = useState(false);
+export default function FavoritesPanel() {
     const { user } = useAuth();
     const { initialLikes } = useUserLikes(user);
-
+    const { isSidebarOpen } = useContext(GlobalContext);
     return !user || !initialLikes ? null : (
         <>
-            <FavoritesLink onClick={() => setShowSidebar(!showSidebar)}>
+            <FavoritesList>
                 Favoritos
-            </FavoritesLink>
+            </FavoritesList>
             
-            <FavoritesSidebarContainer showSidebar={showSidebar}>
-                <Sidebar
-                    showSidebar={showSidebar}
+            <FavoritesSidebarContainer isSidebarOpen={isSidebarOpen}>
+                <SidebarPanel
                     initialLikes={initialLikes || []} 
-                    setShowSidebar={setShowSidebar}
                 />
             </FavoritesSidebarContainer>
         </>

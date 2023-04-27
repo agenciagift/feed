@@ -1,27 +1,27 @@
 import { useContext } from "react";
-import { CloseFavoritesSidebar, FavoriteSidebar, FavoritesLinks, FavoritesTitle, FavoritesUl } from "./styled";
+import { CloseSidebarButton, Sidebar, SidebarLinks, SidebarTitle, SidebarContent } from "./styled";
 import { GlobalContext } from "../../context/GlobalContext";
 
-export default function Sidebar({initialLikes, setShowSidebar}) { 
-    const { likes } = useContext(GlobalContext);
+export default function SidebarPanel() { 
+    const { likes, toggleSidebar } = useContext(GlobalContext);
 
     return likes && likes.length > 0 && (
-        <FavoriteSidebar>
-            <FavoritesTitle>Favoritos</FavoritesTitle>
-            <CloseFavoritesSidebar onClick={() => setShowSidebar(false)}/>
-                <FavoritesUl>
+        <Sidebar>
+            <SidebarTitle>Favoritos</SidebarTitle>
+            <CloseSidebarButton onClick={() => toggleSidebar()}/>
+                <SidebarContent>
                     {likes && likes.length && likes.map((favoriteItem, index) => (
                         <li key={`${favoriteItem.url}-${index}`}>
-                            <FavoritesLinks 
+                            <SidebarLinks 
                                 href={favoriteItem.url}
                                 target="_blank"
                                 rel="noreferrer"
                             >
                                 {favoriteItem.title || favoriteItem.url}
-                            </FavoritesLinks>
+                            </SidebarLinks>
                         </li>
                     ))}
-                </FavoritesUl>
-        </FavoriteSidebar>
+                </SidebarContent>
+        </Sidebar>
     );
 };

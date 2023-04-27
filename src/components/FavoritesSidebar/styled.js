@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { MEDIUM } from "../../constants/sizes";
 import { grey, uiColors } from "../../constants/colors";
 
-export const FavoriteSidebar = styled.div`
+export const Sidebar = styled.div`
     position: fixed;
     top: 0;
     right: 0;
@@ -26,7 +26,7 @@ export const FavoriteSidebar = styled.div`
     }
 `;
 
-export const FavoritesUl = styled.ul`
+export const SidebarContent = styled.ul`
     overflow-y: auto;
     padding: 0;
     padding: 0;
@@ -36,12 +36,12 @@ export const FavoritesUl = styled.ul`
     flex-direction: column;
 `
 
-export const FavoritesTitle = styled.h1`
+export const SidebarTitle = styled.h2`
     text-align: center;
     color: ${grey.light};
 `
 
-export const FavoritesLink = styled.a`
+export const SidebarLinks = styled.a`
     display: block;
     text-decoration: none;
     color: ${grey.light};
@@ -49,7 +49,7 @@ export const FavoritesLink = styled.a`
     font-size: ${MEDIUM};
 `
 
-export const CloseFavoritesSidebar = styled.div`
+export const CloseSidebarButton = styled.div`
     position: absolute;
     background-color: ${grey.dark};
     color: ${grey.light};
