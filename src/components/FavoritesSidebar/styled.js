@@ -41,7 +41,7 @@ export const FavoritesTitle = styled.h1`
     color: ${grey.light};
 `
 
-export const FavoritesLinks = styled.a`
+export const FavoritesLink = styled.a`
     display: block;
     text-decoration: none;
     color: ${grey.light};
