@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { uiColors } from "../../constants/colors";
 
-export const FavoritesLink = styled.ul`
+export const FavoritesList = styled.ul`
     position: relative;
     list-style-type: none;
     padding: 0;
