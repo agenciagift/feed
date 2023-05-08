@@ -1,9 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import LinkItem from '../LinkItem';
 import { LinkFilterButton, LinkListElement, LinkListHeader, LinkListWrapper, NextButton, NextLoadingMessage } from './styled';
-import useUserLikes from "../../hooks/useUserLikes";
-import useAuth from "../../hooks/useAuth";
 
 const LoadMore = ({ next, loading, empty, ended }) => {
     if (ended) {
@@ -38,16 +36,8 @@ const LoadMore = ({ next, loading, empty, ended }) => {
 export default function LinkList() {
     const {
         links, search, loading, ended,
-        next, requestSearch, setUserLikes
+        next, requestSearch
     } = useContext(GlobalContext);
-    const { user } = useAuth();
-    const { initialLikes } = useUserLikes(user);
-
-    useEffect(() => {
-         if (initialLikes && initialLikes.length) {
-            setUserLikes(initialLikes);
-        };
-    }, [initialLikes])
 
     return (
         <LinkListWrapper>

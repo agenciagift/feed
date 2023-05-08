@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { grey } from "../../constants/colors";
-import { MEDIUM, SMALL } from "../../constants/sizes";
+import { SMALL } from "../../constants/sizes";
 import { Wrapper } from "../layout";
 
 export const HeaderContainer = styled.header`

@@ -13,7 +13,7 @@ const isIncluded = (id, collection) => Array.isArray(collection) && collection.i
 
 const InteractionToolBar = ({ id }) => {
     const [isLiked, setIsLiked] = useState(false);
-    const { stats, setUserLikes, unsetUserLike } = useContext(GlobalContext);
+    const { stats } = useContext(GlobalContext);
     const { user, userConfig } = useAuth();
     const { collection: likesCollection } = useUserCollection('Likes', user);
     const linkStats = stats.find((item) => item.id === id);
@@ -23,26 +23,13 @@ const InteractionToolBar = ({ id }) => {
         setIsLiked(isIncluded(id, likesCollection?.items));
     }, [id, likesCollection?.items]);
 
-    const parseLike = (likeDocument) => {
-        return {
-            title: likeDocument.title,
-            url: likeDocument.url,
-        }
-    }
-
     const handleLikeButton = () => {
         try {
             if (!user || isLiked) {
-                removeLinkFromCollection('Likes', id, user).then((link) => {
-                    const parsedLink = parseLike(link);
-                    unsetUserLike(parsedLink);
-                });
+                removeLinkFromCollection('Likes', id, user);
                 setIsLiked(false);
             } else {
-                addLinkToCollection('Likes', id, user).then((link) => {
-                    const parsedLink = parseLike(link);
-                    setUserLikes(parsedLink);
-                });
+                addLinkToCollection('Likes', id, user);
                 setIsLiked(true);
             }
         } catch (error) {

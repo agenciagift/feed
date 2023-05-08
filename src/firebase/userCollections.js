@@ -91,13 +91,23 @@ export const getUserLinksFromCollection = async(collectionName, user) => {
 
 export const getAllUserLinksFromCollection = async(ids) => {
     const linksRef = collection(projectFirestore, 'links');
-    const linksQuery = query(linksRef, where("__name__", "in", ids));
-    const linksDocs = await getDocs(linksQuery);
-    const parsedDocs = linksDocs.docs.map((document) => {
-        return {
-            title: document.data().title, 
-            url: document.data().url,
-        };
-    });
-    return parsedDocs || [];
+    const initialLikes = [];
+    const response = await fetchUserLinks(ids, linksRef)
+    initialLikes.push(...response)
+    return initialLikes || [];
+};
+
+export const fetchUserLinks = async (userLinks, linksRef) => {
+    let parsedDocs = [];
+    const limit = 10;
+    while (userLinks.length) {
+        const batch = query(linksRef, where("__name__", "in", userLinks.splice(0, limit)));
+        const snapshot = await getDocs(batch);
+        const docs = snapshot.docs.map((document) => {
+            return {url: document.data().url, title: document.data().title}
+        })
+        parsedDocs.push(...docs);
+    };
+
+    return parsedDocs;
 }

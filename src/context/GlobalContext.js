@@ -23,20 +23,6 @@ export const GlobalProvider = ({ children }) => {
         });
     };
 
-    const setUserLikes = (userLike) => {
-        dispatch({
-            type: actionTypes.SET_USER_LIKE,
-            payload: userLike,
-        });
-    };
-    
-    const unsetUserLike = (userLike) => {
-        dispatch({
-            type: actionTypes.UNSET_USER_LIKE,
-            payload: userLike,
-        });
-    };
-
     useEffect(() => {
         dispatch({ type: actionTypes.LOADING });
         const linksRef = createLinksRef(state.startAfter, state.search);
@@ -76,8 +62,6 @@ export const GlobalProvider = ({ children }) => {
             add,
             remove,
             requestSearch,
-            setUserLikes,
-            unsetUserLike,
             toggleSidebar,
             isSidebarOpen,
         }}>

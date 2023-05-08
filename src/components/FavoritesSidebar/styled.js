@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { MEDIUM } from "../../constants/sizes";
+import { MEDIUM, SMALL } from "../../constants/sizes";
 import { grey, uiColors } from "../../constants/colors";
 
-export const Sidebar = styled.div`
+export const Sidebar = styled.aside`
     position: fixed;
     top: 0;
     right: 0;
@@ -11,6 +11,7 @@ export const Sidebar = styled.div`
     background-color: ${grey.dark};
     cursor: default;
     box-shadow: 0px 0px 14px black;
+    overflow-y: auto;
 
     li {
         padding: 10px;
@@ -24,6 +25,47 @@ export const Sidebar = styled.div`
             }
         }
     }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+      
+    ::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+      
+    ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 5px;
+    }
+      
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+    }
+
+    /* Edge e IE */
+    *::-ms-scrollbar {
+        width: 10px;
+    }
+
+    *::-ms-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+    *::-ms-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 5px;
+    }
+
+    *::-ms-scrollbar-thumb:hover {
+        background-color: #555;
+    }
 `;
 
 export const SidebarContent = styled.ul`
@@ -36,9 +78,13 @@ export const SidebarContent = styled.ul`
     flex-direction: column;
 `
 
-export const SidebarTitle = styled.h2`
+export const SidebarTitle = styled.header`
     text-align: center;
     color: ${grey.light};
+    padding-top: ${SMALL};
+    padding-bottom: ${SMALL};
+    font-size: 1.2em;
+    font-weight: 700;
 `
 
 export const SidebarLink = styled.a`

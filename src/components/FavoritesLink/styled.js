@@ -26,5 +26,5 @@ const fadeIn = keyframes`
 
 export const FavoritesSidebarContainer = styled.div`
     opacity: ${props => props.isSidebarOpen ? '1' : '0'};
-    animation: ${fadeIn} 0.2s ease-in-out;
+    animation: ${fadeIn} 0.3s ease-in-out;
 `;

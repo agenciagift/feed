@@ -9,8 +9,6 @@ export const actionTypes = {
     REMOVE_LINK: 'REMOVE_LINK',
     REQUEST_SEARCH: 'REQUEST_SEARCH',
     REQUEST_NEXT_PAGE: 'REQUEST_NEXT_PAGE',
-    SET_USER_LIKE: 'SET_USER_LIKE',
-    UNSET_USER_LIKE: 'UNSET_USER_LIKE',
 }
 
 type Link = {
@@ -22,11 +20,6 @@ type Stat = {
     likes: number;
 };
 
-type Likes = {
-    url: string;
-    title: string;
-}
-
 type GlobalState = {
     nextItem: DocumentData;
     startAfter: DocumentData;
@@ -35,7 +28,6 @@ type GlobalState = {
     ended: boolean;
     links: Link[];
     stats: Stat[];
-    likes: Likes[],
 };
 
 type Action = {
@@ -51,7 +43,6 @@ export const initialState: GlobalState = {
     ended: false,
     links: [],
     stats: [],
-    likes: [],
 };
 
 const AppReducer = (state: GlobalState, action: Action) => {
@@ -101,26 +92,6 @@ const AppReducer = (state: GlobalState, action: Action) => {
                 ...state,
                 startAfter: state.nextItem || {},
             };
-
-        case actionTypes.SET_USER_LIKE:
-            if (Array.isArray(action.payload)) {
-                return {
-                    ...state,
-                    likes: [...state.likes, ...action.payload],
-                }
-            };
-
-            state.likes.push(action.payload);
-            return {
-                ...state,
-            };
-        
-        case actionTypes.UNSET_USER_LIKE:
-            const likes = state.likes.filter((like) => like.url !== action.payload.url);
-            return {
-                ...state,
-                likes,
-            }
 
         case actionTypes.REQUEST_SEARCH:
             return {
