@@ -26,15 +26,15 @@ export default function FavoritesPanel() {
             return;
         }
         
-            return onSnapshot(reference, (snap) => {
-                if (!snap.data().items) {
-                    return;
-                }
-                const userLinks = snap.data().items;
-                getAllUserLinksFromCollection(userLinks).then((links) => {
-                    if (links && links.length) setLikes(links)
-                });
+        return onSnapshot(reference, (snap) => {
+            if (!snap.data().items) {
+                return;
+            }
+            const userLinks = snap.data().items;
+            getAllUserLinksFromCollection(userLinks).then((links) => {
+                if (links && links.length) setLikes(links)
             });
+        });
     }, [reference])
 
     return !user || !likes || !reference ? null : (

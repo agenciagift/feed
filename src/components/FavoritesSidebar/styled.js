@@ -78,7 +78,7 @@ export const SidebarContent = styled.ul`
     flex-direction: column;
 `
 
-export const SidebarTitle = styled.header`
+export const SidebarTitle = styled.h3`
     text-align: center;
     color: ${grey.light};
     padding-top: ${SMALL};
