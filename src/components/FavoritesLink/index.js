@@ -22,19 +22,19 @@ export default function FavoritesPanel() {
     }, [initialLikes, likes]);
 
     useEffect(() => {
-        let unsubscribe;
-        if (reference) {
-            unsubscribe = onSnapshot(reference, (snap) => {
-                if (!snap.data().items) return;
+        if (!reference) {
+            return;
+        }
+        
+            return onSnapshot(reference, (snap) => {
+                if (!snap.data().items) {
+                    return;
+                }
                 const userLinks = snap.data().items;
                 getAllUserLinksFromCollection(userLinks).then((links) => {
                     if (links && links.length) setLikes(links)
                 });
             });
-        }
-        return () => {
-            if (unsubscribe) unsubscribe();
-        }
     }, [reference])
 
     return !user || !likes || !reference ? null : (
