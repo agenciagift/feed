@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import { signInMethods } from '../../firebase/config';
 import useAuth from '../../hooks/useAuth';
 import { UserMenuButton, UserMenuContainer, UserMenuList, UserMenuText } from "./styled";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const UserMenu = ({ showMenu, setShowMenu }) => {
     const { user, signIn, logOut } = useAuth();
+    const { toggleSidebar } = useContext(GlobalContext);
 
     if (!showMenu) {
         return null;
@@ -41,6 +44,9 @@ const UserMenu = ({ showMenu, setShowMenu }) => {
                         <UserMenuText>
                             {user.displayName}
                         </UserMenuText>
+                        <UserMenuButton onClick={toggleSidebar}>
+                            Favoritos
+                        </UserMenuButton>
                         <UserMenuList>
                             <li>
                                 <SignOutButton />

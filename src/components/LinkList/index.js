@@ -36,7 +36,7 @@ const LoadMore = ({ next, loading, empty, ended }) => {
 export default function LinkList() {
     const {
         links, search, loading, ended,
-        next, requestSearch,
+        next, requestSearch
     } = useContext(GlobalContext);
 
     return (
